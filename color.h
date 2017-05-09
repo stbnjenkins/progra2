@@ -1,9 +1,9 @@
 #ifndef _COLOR_H
 #define _COLOR_H
-typedef struct {
+typedef struct color {
   long double r;
   long double g;
   long double b;
-} COLOR;
+} COLOR, *COLOR_PTR;
 
 #endif /*_COLOR_H*/
