@@ -63,20 +63,17 @@ void vectorPrint(VECTOR_PTR v){
 
 
 int main(){
-    VECTOR v1;
-    v1.x = 3.0;
-    v1.y = 1.0;
-    v1.z = 2.0;
+    // Variable definition
+    VECTOR v1 = {x: 3.0, y: 1.0, z: 2.0};
+    VECTOR v2 = {x: 5.0, y: 4.0, z: 13.0};
+    VECTOR resta;
+    VECTOR suma;
+
+    // Testing functions
     vectorPrint(&v1);
-    // normalizeVector(&v1);
-    // vectorPrint(&v1);
-    VECTOR v2;
-    v2.x = 5.0;
-    v2.y = 4.0;
-    v2.z = 13.0;
     vectorPrint(&v2);
-    VECTOR suma = vectorAdd(&v1, &v2);
+    suma = vectorAdd(&v1, &v2);
     vectorPrint(&suma);
-    VECTOR resta = vectorDiff(&v1, &v2);
+    resta = vectorDiff(&v1, &v2);
     vectorPrint(&resta);
 }
