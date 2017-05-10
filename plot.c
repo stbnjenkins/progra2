@@ -11,7 +11,7 @@
 COLOR **buffer;
 
 //Plot put the points in the buffer
-void plot(int res, int x,int y,double R,double G,double B){
+void plot(int res, int x,int y,long double R,long double G,long double B){
     if (x<res && y <res){
         buffer[x][y].r = R;
         buffer[x][y].g = G;
