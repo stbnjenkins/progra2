@@ -2,13 +2,14 @@
 #include <stdlib.h>
 
 #include "plot.c"
+#include "list.c"
 #include "keyboard_input.c"
 #include "figure_struct.c"
 #include "vectors.c"
 #include "ray.c"
 #include "shapes.c"
-#include "frame_manager.c"
 #include "ray_tracer.c"
+#include "frame_manager.c"
 
 //Run the window
 void window_runner(int resx, int resy) {
@@ -28,11 +29,10 @@ void window_runner(int resx, int resy) {
 
 
 //test lines
-    POINT eye; eye.x = 550.0; eye.y = 400.0; eye.z = -5.0;
+  
+  frame_plotter (resx, resy);
 
-    ray_tracer (&eye, resx, resy);
-
-    plot_framebuffer(resx,resy);
+  plot_framebuffer(resx,resy);
 
 //end of test
 
