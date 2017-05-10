@@ -62,18 +62,18 @@ void vectorPrint(VECTOR_PTR v){
 }
 
 
-int main(){
-    // Variable definition
-    VECTOR v1 = {x: 3.0, y: 1.0, z: 2.0};
-    VECTOR v2 = {x: 5.0, y: 4.0, z: 13.0};
-    VECTOR resta;
-    VECTOR suma;
+// int main(){
+//     // Variable definition
+//     VECTOR v1 = {x: 3.0, y: 1.0, z: 2.0};
+//     VECTOR v2 = {x: 5.0, y: 4.0, z: 13.0};
+//     VECTOR resta;
+//     VECTOR suma;
 
-    // Testing functions
-    vectorPrint(&v1);
-    vectorPrint(&v2);
-    suma = vectorAdd(&v1, &v2);
-    vectorPrint(&suma);
-    resta = vectorDiff(&v1, &v2);
-    vectorPrint(&resta);
-}
+//     // Testing functions
+//     vectorPrint(&v1);
+//     vectorPrint(&v2);
+//     suma = vectorAdd(&v1, &v2);
+//     vectorPrint(&suma);
+//     resta = vectorDiff(&v1, &v2);
+//     vectorPrint(&resta);
+// }

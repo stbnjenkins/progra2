@@ -11,8 +11,8 @@
 COLOR **buffer;
 
 //Plot put the points in the buffer
-void plot(int res, int x,int y,long double R,long double G,long double B){
-    if (x<res && y <res){
+void plot(int resx,int resy, int x,int y,long double R,long double G,long double B){
+    if (x<resx && y <resy){
         buffer[x][y].r = R;
         buffer[x][y].g = G;
         buffer[x][y].b = B;
@@ -20,13 +20,13 @@ void plot(int res, int x,int y,long double R,long double G,long double B){
 }
 
 //Take info from buffer and put it on display
-void plot_framebuffer(int res) {
+void plot_framebuffer(int resx, int resy) {
   int i, j;
   COLOR color;
 
-  for (i = 0; i < res; i++) 
+  for (i = 0; i < resx; i++) 
       {
-       for (j = 0; j < res; j++) 
+       for (j = 0; j < resy; j++) 
            {
             glColor3f (buffer[i][j].r,buffer[i][j].g,buffer[i][j].b);
             glBegin (GL_POINTS);
@@ -38,18 +38,18 @@ void plot_framebuffer(int res) {
 }
 
 //Initialize buffer (everything white)
-void ini_buffer(int res) {
+void ini_buffer(int resx, int resy) {
     int i, j;
 
     //reserve the memory space for the buffer
-    buffer = (COLOR **)malloc(res * sizeof(COLOR*));
-    for (i = 0; i < res; i++){
-        buffer[i] = (COLOR *)malloc(res * sizeof(COLOR));
+    buffer = (COLOR **)malloc(resx * sizeof(COLOR*));
+    for (i = 0; i < resx; i++){
+        buffer[i] = (COLOR *)malloc(resy * sizeof(COLOR));
     }
 
     //initialize the values R G B for every pixel 
-    for (i = 0; i < res; i++) {
-        for (j = 0; j < res; j++) {
+    for (i = 0; i < resx; i++) {
+        for (j = 0; j < resy; j++) {
             buffer[i][j].r = 0.57255;
             buffer[i][j].g = 0.9098;
             buffer[i][j].b = 1;

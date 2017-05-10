@@ -23,7 +23,7 @@ Figure_NodePtr create_list_of_figures (){
 
 //Run plotter with mode
 void frame_plotter (int res){
-    ini_buffer(res);
+    ini_buffer(res, res);
 
     list_of_figures = create_list_of_figures();
 
