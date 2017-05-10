@@ -1,7 +1,5 @@
 #include <math.h>
-// #include <tgmath.h>
 #include <stdio.h>
-// #include "vectors.h"
 
 typedef struct vector{
     long double x,y,z;
