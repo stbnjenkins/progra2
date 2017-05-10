@@ -34,7 +34,7 @@ void plot_framebuffer(int res) {
             glEnd();
            }
       }
-  glutSwapBuffers();
+  glFlush();
 }
 
 //Initialize buffer (everything white)
