@@ -11,15 +11,18 @@ bool iterate_shape(void *data){
 
     if (inter != NULL) {
         if (tmin > inter->t) {
-            ptr = (SHAPE_PTR)data;    
+            ptr = (SHAPE_PTR)data;
+            tmin = inter->t;    
         }
     }
     return TRUE;
 }
 
 //RAy Tracher
-void ray_tracer (list *shapeList, POINT_PTR eye, int resx, int resy){
+void ray_tracer (list *shapeList, POINT_PTR eye, int resx, int resy, PointNodePtr Light_list, long double Ia, long double Ka){
     int i, j;
+    COLOR color;
+    POINT intersection;
 
      for (i = 0; i < resx; i++) {
        for (j = 0; j < resy; j++) {
@@ -29,7 +32,12 @@ void ray_tracer (list *shapeList, POINT_PTR eye, int resx, int resy){
             list_for_each(shapeList, iterate_shape);
 
             if (ptr != NULL) { 
-                plot(resx, resy, i, j, (ptr->color).r, (ptr->color).g, (ptr->color).b);
+                intersection = get_point_from_ray (&ray, tmin);
+                
+                color = get_color(ptr, intersection, Light_list, Ia, Ka);
+ 
+                plot(resx, resy, i, j, color.r, color.g, color.b);
+ 
             }
        }
      }

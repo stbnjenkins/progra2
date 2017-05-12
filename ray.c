@@ -17,20 +17,15 @@ void rayPrint(RAY_PTR r){
 
 //Find RAY
 RAY find_ray (POINT_PTR eye, int x, int y){
-    long double Xw,Yw,Zw;
-
     VECTOR vector;
     RAY ray;
 
-    Xw = (long double) x + 0.5;
-    Yw = (long double) y + 0.5;
-    Zw = 0;
+    POINT frame;
+    frame.x=(long double) x + 0.5;
+    frame.y=(long double) y + 0.5;
+    frame.z= 0;
 
-    vector.x = Xw - eye->x;
-    vector.y = Yw - eye->y;
-    vector.z = Zw - eye->z;
-
-    normalizeVector (&vector);
+    vector = getNormVectorFromPoints(*eye,frame);
 
     ray.point = *eye;
     ray.vector = vector;

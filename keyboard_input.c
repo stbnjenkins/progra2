@@ -21,7 +21,8 @@ void processNormalKeys(unsigned char key, int x, int y) {
         case 81: // Q
             exit(0);
         case 82: // R
-            // printf("Reiniciar\n");
+            printf("Reiniciando\n");
+            initialize_frame(resx, resy);
             return;
         case 88: // X
             if (mod == (GLUT_ACTIVE_SHIFT)) {
@@ -54,7 +55,8 @@ void processNormalKeys(unsigned char key, int x, int y) {
         case 113: // q
             exit(0);
         case 114: // r
-            // printf("Reiniciar\n");
+            printf("Reiniciando\n");
+            initialize_frame(resx, resy);
             return;        
         case 120: // x
             if (mod == (GLUT_ACTIVE_SHIFT)) {

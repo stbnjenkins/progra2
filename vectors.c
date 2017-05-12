@@ -1,5 +1,6 @@
 #include <math.h>
 #include <stdio.h>
+#include "point.h"
 
 typedef struct vector{
     long double x,y,z;
@@ -25,7 +26,9 @@ VECTOR vectorDiff(VECTOR_PTR v1, VECTOR_PTR v2){
 
 // Obtain the dot product of two vectos
 long double vectorDotProduct(VECTOR_PTR v1, VECTOR_PTR v2){
-    return v1->x * v2->x + v1->y * v2->y + v1->z * v2->z;
+    long double P;
+    P = (v1->x * v2->x) + (v1->y * v2->y) + (v1->z * v2->z);
+    return P;
 }
 
 // Return new scaled vector by parameter s
@@ -59,6 +62,21 @@ void vectorPrint(VECTOR_PTR v){
     printf("[vector] x = %Lf\ty = %Lf\tz = %Lf\n", v->x,v->y, v->z);
 }
 
+// get norm vector from points
+VECTOR getNormVectorFromPoints(POINT ini, POINT fin) {
+    VECTOR vn;
+    vn.x = fin.x - ini.x;
+    vn.y = fin.y - ini.y;
+    vn.z = fin.z - ini.z;
+    normalizeVector(&vn);
+    return vn;
+}
+
+//get distance from points
+long double getDistance(POINT ini, POINT fin){
+    long double norm = sqrtl(powl(fin.x-ini.x,2) + powl(fin.y-ini.y,2) + powl(fin.z-ini.z,2));
+    return norm;
+}
 
 // int main(){
 //     // Variable definition

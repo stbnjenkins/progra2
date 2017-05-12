@@ -60,7 +60,7 @@ MAGNITUD_PTR get_sphere_intersection (RAY_PTR ray, SPHERE_PTR sphere) {
             my_t.t = t1;
             t=&my_t;
         }
-        //sphere begin eye
+        //sphere behind eye
         else if (t2 < 0) {
             return t;
             //no nothing
@@ -76,6 +76,13 @@ MAGNITUD_PTR get_sphere_intersection (RAY_PTR ray, SPHERE_PTR sphere) {
 
     return t;
 
+}
+
+//Get Normal on sphere
+VECTOR get_normal_sphere(SPHERE_PTR sphere, POINT surface) {
+    POINT center = sphere->center;
+    VECTOR vector = getNormVectorFromPoints(center,surface);
+    return vector;
 }
 
 // END SPHERE ///////////////////////////////////////////////
