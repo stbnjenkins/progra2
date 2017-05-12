@@ -13,6 +13,11 @@
 
 //Run the window
 void window_runner(int resx, int resy) {
+
+    // Making calculations
+    ini_buffer(resx,resy);
+    frame_plotter (resx, resy);
+
     //starting window
     char *myargv[1];
     int myargc=1;
@@ -20,25 +25,16 @@ void window_runner(int resx, int resy) {
     glutInit(&myargc, myargv);
     glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
     glutInitWindowSize(resx,resy);
-    glutCreateWindow("Plot");
+    glutCreateWindow("Ray Tracer");
     glClear(GL_COLOR_BUFFER_BIT);
     gluOrtho2D(-0.5, resx +0.5, -0.5, resy + 0.5);
-  
-    ini_buffer(resx,resy);
+
     plot_framebuffer(resx,resy);
 
 
-//test lines
-  
-  frame_plotter (resx, resy);
-
-  plot_framebuffer(resx,resy);
-
-//end of test
-
-    // here are the new entries
-	glutKeyboardFunc(processNormalKeys);
-	glutSpecialFunc(processSpecialKeys);
+    // Define keyboard input
+	// glutKeyboardFunc(processNormalKeys);
+	// glutSpecialFunc(processSpecialKeys);
 
     glutMainLoop();
 }
