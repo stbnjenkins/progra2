@@ -79,41 +79,27 @@ void processSpecialKeys(int key, int x, int y) {
     int mod = glutGetModifiers();
 	switch(key) {
 		case GLUT_KEY_F1 :
-                // printf("%d\n", fill_mode);
+                list_for_each(&shapeList, constant);
+                frame_plotter (resx, resy, shapeList, eye);
 				return;
 		case GLUT_KEY_F2 :
-				// printf("%d\n", fill_mode);
+                list_for_each(&shapeList, linear);
+                frame_plotter (resx, resy, shapeList, eye);
 				return;
 		case GLUT_KEY_F3 :
-				// printf("%d\n", fill_mode);
+				list_for_each(&shapeList, quadratic);
+				frame_plotter (resx, resy, shapeList, eye);
 				return;
-        case GLUT_KEY_LEFT :
-                if (mod == (GLUT_ACTIVE_SHIFT)) {
-                    // printf("Pan left con shift\n");
-                    return;
-                }
-				// printf("Pan left\n");
-				return;
-        case GLUT_KEY_RIGHT :
-                if (mod == (GLUT_ACTIVE_SHIFT)) {
-                    // printf("Pan right con shift\n");
-                    return;
-                }
-				// printf("Pan right\n");
-				return;
+
         case GLUT_KEY_DOWN :
-                if (mod == (GLUT_ACTIVE_SHIFT)) {
-                    // printf("Pan down con shift\n");
-                    return;
-                }
-				// printf("Pan down\n");
+                Ia -= 0.2;
+                if(Ia<0) Ia = 0.0;
+                frame_plotter (resx, resy, shapeList, eye);
 				return;
         case GLUT_KEY_UP :
-                if (mod == (GLUT_ACTIVE_SHIFT)) {
-                    // printf("Pan up con shift\n");
-                    return;
-                }
-				// printf("Pan up\n");
+                Ia += 0.2;
+                if(Ia>1) Ia = 1.0;
+                frame_plotter (resx, resy, shapeList, eye);
 				return;
 	}
 }

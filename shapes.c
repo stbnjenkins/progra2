@@ -118,7 +118,7 @@ typedef union shape_u{
 typedef struct shape{
     int id;
     COLOR color;
-    long double Kd, c1, c2, c3;
+    long double Kd, Ka, c1, c2, c3;
     SHAPE_U shape;
 }SHAPE, *SHAPE_PTR;
 
@@ -139,6 +139,27 @@ void printShape(SHAPE_PTR s){
         default:
             printf("Not a valid figure");
     }
+}
+
+bool quadratic(void *data){
+    ((SHAPE_PTR)data)->c1 = 0.0;
+    ((SHAPE_PTR)data)->c2 = 0.0;
+    ((SHAPE_PTR)data)->c3 = 1.0;
+    return TRUE;
+}
+
+bool constant(void *data){
+    ((SHAPE_PTR)data)->c1 = 0.5;
+    ((SHAPE_PTR)data)->c2 = 0.0;
+    ((SHAPE_PTR)data)->c3 = 0.0;
+    return TRUE;
+}
+
+bool linear(void *data){
+    ((SHAPE_PTR)data)->c1 = 0.0;
+    ((SHAPE_PTR)data)->c2 = 1.0;
+    ((SHAPE_PTR)data)->c3 = 0.0;
+    return TRUE;
 }
 
 ///

@@ -19,7 +19,7 @@ bool iterate_shape(void *data){
 }
 
 //RAy Tracher
-void ray_tracer (list *shapeList, POINT_PTR eye, int resx, int resy, PointNodePtr Light_list, long double Ia, long double Ka){
+void ray_tracer (list *shapeList, POINT_PTR eye, int resx, int resy, PointNodePtr Light_list){
     int i, j;
     COLOR color;
     POINT intersection;
@@ -34,7 +34,7 @@ void ray_tracer (list *shapeList, POINT_PTR eye, int resx, int resy, PointNodePt
             if (ptr != NULL) { 
                 intersection = get_point_from_ray (&ray, tmin);
                 
-                color = get_color(ptr, intersection, Light_list, Ia, Ka);
+                color = get_color(ptr, intersection, Light_list);
  
                 plot(resx, resy, i, j, color.r, color.g, color.b);
  
