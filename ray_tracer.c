@@ -1,24 +1,29 @@
 #include <float.h>
 
-MAGNITUD_PTR inter;
-SHAPE_PTR ptr = NULL;
-RAY ray;
-long double tmin;
+//RAY TRACER CODE
 
-bool iterate_shape(void *data){
-//    printShape((SHAPE_PTR)data);
-    inter = get_sphere_intersection (&ray, &((((SHAPE_PTR)data)->shape).sphere));
+// bool iterate_shape(void *data){
+// //    printShape((SHAPE_PTR)data);
+//     inter = get_sphere_intersection (&ray, &((((SHAPE_PTR)data)->shape).sphere));
 
-    if (inter != NULL) {
-        if (tmin > inter->t) {
-            ptr = (SHAPE_PTR)data;
-            tmin = inter->t;    
-        }
-    }
-    return TRUE;
-}
+//     if (inter != NULL) {
+//         if ((tmin > inter->t) && (inter->t > EPSILON)) {
+//             ptr = (SHAPE_PTR)data;
+//             tmin = inter->t;    
+//         }
+//     }
+//     return TRUE;
+// }
 
-//RAy Tracher
+// //First Intersection
+// SHAPE_PTR first_intersection (list *shapeList) {
+//     tmin=LDBL_MAX;
+//     ptr = NULL;
+//     list_for_each(shapeList, iterate_shape);
+//     return ptr;
+// }
+
+//RAy Tracer
 void ray_tracer (list *shapeList, POINT_PTR eye, int resx, int resy, PointNodePtr Light_list){
     int i, j;
     COLOR color;
@@ -26,10 +31,12 @@ void ray_tracer (list *shapeList, POINT_PTR eye, int resx, int resy, PointNodePt
 
      for (i = 0; i < resx; i++) {
        for (j = 0; j < resy; j++) {
-            tmin=LDBL_MAX;
-            ptr = NULL;
+
+//First Intersection
             ray = find_ray (eye, i, j);
-            list_for_each(shapeList, iterate_shape);
+            ptr = first_intersection(shapeList);
+
+//De que color
 
             if (ptr != NULL) { 
                 intersection = get_point_from_ray (&ray, tmin);

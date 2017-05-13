@@ -16,7 +16,7 @@ long double get_partial_intensity(VECTOR N, VECTOR L,long double Distance, long 
 
 //Get Color for spheres
 COLOR get_sphere_color (SPHERE_PTR sphere, COLOR color, POINT intersection, PointNodePtr Light_list, long double Kd, long double c1,long double c2, long double c3, long double Ka) {
-    PointNodePtr ptr;
+    PointNodePtr my_ptr;
     VECTOR L,N;
     COLOR final_color;
     long double Distance, I, Ip, Final_I;
@@ -29,12 +29,21 @@ COLOR get_sphere_color (SPHERE_PTR sphere, COLOR color, POINT intersection, Poin
         final_color = color;
 
     } else{
-        for (ptr = Light_list;ptr != NULL;ptr = ptr->next){ 
-            Ip = ptr->Ip;
-            L = getNormVectorFromPoints(intersection,ptr->point); 
-            Distance = getDistance(intersection, ptr->point);
-            I = get_partial_intensity(N, L, Distance, Kd, Ip, c1, c2, c3);
-            Final_I = Final_I + I;
+        for (my_ptr = Light_list;my_ptr != NULL;my_ptr = my_ptr->next){ 
+
+            ptr = NULL;
+
+            if (Enable_Shadow) {
+                ray = find_ray_from_2_points(&intersection, &(my_ptr->point));
+                ptr = first_intersection(&shapeList);
+            }    
+            if (ptr == NULL) {
+                    Ip = my_ptr->Ip;
+                    L = getNormVectorFromPoints(intersection,my_ptr->point); 
+                    Distance = getDistance(intersection, my_ptr->point);
+                    I = get_partial_intensity(N, L, Distance, Kd, Ip, c1, c2, c3);
+                    Final_I = Final_I + I;
+            }
         }
     }
 

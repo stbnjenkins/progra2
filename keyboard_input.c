@@ -25,12 +25,17 @@ void processNormalKeys(unsigned char key, int x, int y) {
             initialize_frame(resx, resy);
             return;
         case 88: // X
-            if (mod == (GLUT_ACTIVE_SHIFT)) {
-                // printf("Zoom in con shift\n");
+            if (Enable_Shadow == 0) {
+                printf("Habilitando Sombra\n");
+                Enable_Shadow = 1;
+                frame_plotter (resx, resy, shapeList, eye);
+                return;
+            } else {
+                printf("Deshabilitando Sombra\n");
+                Enable_Shadow = 0;
+                frame_plotter (resx, resy, shapeList, eye);
                 return;
             }
-            // printf("Zoom in\n");
-            return;
         case 90: // Z
             if (mod == (GLUT_ACTIVE_SHIFT)) {
                 // printf("Zoom out con shift\n");
@@ -59,12 +64,17 @@ void processNormalKeys(unsigned char key, int x, int y) {
             initialize_frame(resx, resy);
             return;        
         case 120: // x
-            if (mod == (GLUT_ACTIVE_SHIFT)) {
-                // printf("Zoom in con shift\n");
+            if (Enable_Shadow == 0) {
+                printf("Habilitando Sombra\n");
+                Enable_Shadow = 1;
+                frame_plotter (resx, resy, shapeList, eye);
+                return;
+            } else {
+                printf("Deshabilitando Sombra\n");
+                Enable_Shadow = 0;
+                frame_plotter (resx, resy, shapeList, eye);
                 return;
             }
-            // printf("Zoom in\n");
-            return;
         case 122: // z
             if (mod == (GLUT_ACTIVE_SHIFT)) {
                 // printf("Zoom out con shift\n");

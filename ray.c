@@ -34,6 +34,20 @@ RAY find_ray (POINT_PTR eye, int x, int y){
     return ray;
 }
 
+//Find Ray 2 points
+RAY find_ray_from_2_points (POINT_PTR ini, POINT_PTR fin){
+    VECTOR vector;
+    RAY ray;
+    
+    vector = getNormVectorFromPoints(*ini,*fin);
+
+    ray.point = *ini;
+    ray.vector = vector;
+
+    return ray;
+}
+
+
 //Get point from ray
 POINT get_point_from_ray (RAY_PTR ray, long double t){
     POINT point;
