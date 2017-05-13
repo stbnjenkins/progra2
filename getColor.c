@@ -1,5 +1,6 @@
 #include <math.h>
 
+//// SPHERE COLOR /////////////////////////////////////////////////////////
 //Get Partial Especular
 long double get_partial_especular(long double product, long double Distance, long double Ks, long double Ip, long double c1, long double c2, long double c3){
     long double partial_E, Fatt;
@@ -88,7 +89,9 @@ COLOR get_sphere_color (SPHERE_PTR sphere, COLOR color, POINT intersection, Poin
     return final_color;
 
 }
+//// SPHERE COLOR /////////////////////////////////////////////////////////
 
+//// GET COLOR ////////////////////////////////////////////////////////////
 //Get Color
 COLOR get_color(SHAPE_PTR shape, POINT intersection, PointNodePtr Light_list){
     int id = shape->id;

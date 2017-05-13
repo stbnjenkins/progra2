@@ -107,11 +107,41 @@ void conePrint(CONE_PTR c){
 
 // END CONE ////////////////////////////////////////////////
 
+// PLANE /////////////////////////////////////////////////////
+typedef struct plane{
+    long double lenght;
+    long double width;
+    POINT center;
+} PLANE, *PLANE_PTR;
+
+// create a plane
+PLANE create_plane(POINT c, long double l, long double w){
+    PLANE new_plane = {lenght: l, width: w, center: c};
+    return new_plane;
+}
+// print a plane
+void planePrint(PLANE_PTR c){
+    printf("[plane] center = (%Lf, %Lf, %Lf)\tlenght = %Lf\twidth = %Lf\n", 
+        (c->center).x, (c->center).y,(c->center).z, c->lenght, c->width);
+}
+
+//get intersection
+MAGNITUD_PTR get_plane_intersection (RAY_PTR ray, PLANE_PTR plane) {
+    MAGNITUD_PTR t = NULL;
+
+
+
+    return t;
+}
+
+// END PLANE ////////////////////////////////////////////////
+
 // SHAPE STRUCT ///////////////////////////////////////////
 
 typedef union shape_u{
         SPHERE sphere;
         CONE cone;
+        PLANE plane;
         // other shapes
 } SHAPE_U;
 
