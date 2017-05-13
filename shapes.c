@@ -118,7 +118,7 @@ typedef union shape_u{
 typedef struct shape{
     int id;
     COLOR color;
-    long double Kd, Ka, c1, c2, c3;
+    long double Kd, Ks, Ka, c1, c2, c3;
     SHAPE_U shape;
 }SHAPE, *SHAPE_PTR;
 

@@ -4,6 +4,19 @@ void processNormalKeys(unsigned char key, int x, int y) {
 	switch(key){
         case 27: //escape
             exit(0);
+        case 67: // C
+            if (Enable_Especular == 0) {
+                printf("Habilitando Especular\n");
+                Enable_Especular = 1;
+                frame_plotter (resx, resy, shapeList, eye);
+                return;
+            } else {
+                printf("Deshabilitando Especular\n");
+                Enable_Especular = 0;
+                frame_plotter (resx, resy, shapeList, eye);
+                return;
+            }
+
         case 74: // J
             if (mod == (GLUT_ACTIVE_SHIFT)) {
                 // printf("Rotar manecillas reloj con shift\n");
@@ -37,12 +50,29 @@ void processNormalKeys(unsigned char key, int x, int y) {
                 return;
             }
         case 90: // Z
-            if (mod == (GLUT_ACTIVE_SHIFT)) {
-                // printf("Zoom out con shift\n");
+            if (Enable_intensity == 0) {
+                printf("Habilitando Intensidad\n");
+                Enable_intensity = 1;
+                frame_plotter (resx, resy, shapeList, eye);
+                return;
+            } else {
+                printf("Deshabilitando Intensity\n");
+                Enable_intensity = 0;
+                frame_plotter (resx, resy, shapeList, eye);
                 return;
             }
-            // printf("Zoom out\n");
-            return;
+        case 99: // c
+            if (Enable_Especular == 0) {
+                printf("Habilitando Especular\n");
+                Enable_Especular = 1;
+                frame_plotter (resx, resy, shapeList, eye);
+                return;
+            } else {
+                printf("Deshabilitando Especular\n");
+                Enable_Especular = 0;
+                frame_plotter (resx, resy, shapeList, eye);
+                return;
+            }
         case 106: // j
             if (mod == (GLUT_ACTIVE_SHIFT)) {
                 // printf("Rotar manecillas reloj con shift\n");
@@ -76,12 +106,17 @@ void processNormalKeys(unsigned char key, int x, int y) {
                 return;
             }
         case 122: // z
-            if (mod == (GLUT_ACTIVE_SHIFT)) {
-                // printf("Zoom out con shift\n");
+            if (Enable_intensity == 0) {
+                printf("Habilitando Intensidad\n");
+                Enable_intensity = 1;
+                frame_plotter (resx, resy, shapeList, eye);
+                return;
+            } else {
+                printf("Deshabilitando Intensity\n");
+                Enable_intensity = 0;
+                frame_plotter (resx, resy, shapeList, eye);
                 return;
             }
-            // printf("Zoom out\n");
-            return;
     }
 }
 // rotacion, pan y zoom
