@@ -48,17 +48,8 @@ void frame_plotter (int resx, int resy, list shapeList, POINT eye){
 
 //Initialize frame
 void initialize_frame(int resx, int resy){
-    // POINT eye; eye.x = 550.0; eye.y = 400.0; eye.z = -2000.0;
     list_destroy(&shapeList);
     shapeList = create_list_of_shapes();
- //   create_list_of_lights();
     frame_plotter (resx, resy, shapeList, eye); 
 }
 
-//Change Ia
-
-
-//CHange Ka
-
-
-//Change Ip per light

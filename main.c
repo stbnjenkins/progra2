@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int resx, resy;
 #include "point.h"
 #include "plot.c"
 #include "list.c"

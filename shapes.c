@@ -144,7 +144,7 @@ void printShape(SHAPE_PTR s){
 bool quadratic(void *data){
     ((SHAPE_PTR)data)->c1 = 0.0;
     ((SHAPE_PTR)data)->c2 = 0.0;
-    ((SHAPE_PTR)data)->c3 = 1.0;
+    ((SHAPE_PTR)data)->c3 = 0.00001;
     return TRUE;
 }
 
@@ -157,7 +157,7 @@ bool constant(void *data){
 
 bool linear(void *data){
     ((SHAPE_PTR)data)->c1 = 0.0;
-    ((SHAPE_PTR)data)->c2 = 1.0;
+    ((SHAPE_PTR)data)->c2 = 0.005;
     ((SHAPE_PTR)data)->c3 = 0.0;
     return TRUE;
 }

@@ -7,5 +7,6 @@ list shapeList;
 long double Ia = 0.5;
 PointNodePtr Light_list = NULL;
 POINT eye = {x: 550.0, y: 400.0, z:-2000};
+int resx, resy;
 
 #endif /* _GENERAL_H */

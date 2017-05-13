@@ -79,26 +79,63 @@ void processSpecialKeys(int key, int x, int y) {
     int mod = glutGetModifiers();
 	switch(key) {
 		case GLUT_KEY_F1 :
+                printf("Factor de Atenuacion Constante\n");
                 list_for_each(&shapeList, constant);
                 frame_plotter (resx, resy, shapeList, eye);
 				return;
 		case GLUT_KEY_F2 :
+                printf("Factor de Atenuacion Lineal\n");
                 list_for_each(&shapeList, linear);
                 frame_plotter (resx, resy, shapeList, eye);
 				return;
 		case GLUT_KEY_F3 :
+                printf("Factor de Atenuacion Cuadratico\n");
 				list_for_each(&shapeList, quadratic);
 				frame_plotter (resx, resy, shapeList, eye);
 				return;
 
+        case GLUT_KEY_F4 :
+                if (mod == (GLUT_ACTIVE_SHIFT)) {
+                    change_ip_node(0,-0.2,Light_list);
+				    frame_plotter (resx, resy, shapeList, eye);
+				    return;
+                } else {
+                    change_ip_node(0,0.2,Light_list);
+				    frame_plotter (resx, resy, shapeList, eye);
+				    return;
+                }
+        case GLUT_KEY_F5 :
+                if (mod == (GLUT_ACTIVE_SHIFT)) {
+                    change_ip_node(1,-0.2,Light_list);
+				    frame_plotter (resx, resy, shapeList, eye);
+				    return;
+                } else {
+                    change_ip_node(1,0.2,Light_list);
+				    frame_plotter (resx, resy, shapeList, eye);
+				    return;
+                }
+        case GLUT_KEY_F6 :
+                if (mod == (GLUT_ACTIVE_SHIFT)) {
+                    change_ip_node(2,-0.2,Light_list);
+				    frame_plotter (resx, resy, shapeList, eye);
+				    return;
+                } else {
+                    change_ip_node(2,0.2,Light_list);
+				    frame_plotter (resx, resy, shapeList, eye);
+				    return;
+                }
+
+
         case GLUT_KEY_DOWN :
                 Ia -= 0.2;
                 if(Ia<0) Ia = 0.0;
+                printf("Disminuyendo Ia:%Lf\n",Ia);
                 frame_plotter (resx, resy, shapeList, eye);
 				return;
         case GLUT_KEY_UP :
                 Ia += 0.2;
                 if(Ia>1) Ia = 1.0;
+                printf("Aumentando Ia:%Lf\n",Ia);
                 frame_plotter (resx, resy, shapeList, eye);
 				return;
 	}

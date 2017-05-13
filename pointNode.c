@@ -47,6 +47,28 @@ PointNodePtr create_node(POINT myPoint, long double Ip){
     }
 }    
 
+//Change Ip on FLight
+void change_ip_node (int index, long double Ip, PointNodePtr first) {
+    PointNodePtr ptr= first;
+    int actual_index = 0;
+    if (first == NULL){
+        printf("\nEMPTY LIST:");
+        printf(":No nodes in the list to display\n");
+    } else{
+        for (actual_index = 0; actual_index < index; actual_index++ ){
+            ptr = ptr->next;
+            if (ptr == NULL) {
+                printf("Wrong Index for Light, Exiting...\n");
+                exit(0);
+            }
+        }
+         ptr->Ip=Ip + ptr->Ip;
+         if ((ptr->Ip) < 0) {ptr->Ip=0;}
+         else if ((ptr->Ip) > 1) {ptr->Ip=1;}
+         printf("Cambiando Ip de Luz %d:%Lf\n", index, ptr->Ip);
+    }
+} 
+
 // Displays non-empty List from Beginning to End
 void display(PointNodePtr first){
     PointNodePtr ptr;
