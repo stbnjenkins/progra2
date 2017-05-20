@@ -9,6 +9,9 @@ bool iterate_shape(void *data){
     else if (id == 2){
         inter = get_plane_intersection (&ray, &((((SHAPE_PTR)data)->shape).plane));
     }
+    else if (id == 3){
+        inter = get_polygon_intersection (&ray, &((((SHAPE_PTR)data)->shape).polygon));
+    }
 
     if (inter != NULL) {
         if ((tmin > inter->t) && (inter->t > EPSILON)) {

@@ -78,6 +78,24 @@ long double getDistance(POINT ini, POINT fin){
     return norm;
 }
 
+//get max direction from vector
+int max_direction(VECTOR_PTR v){
+    int D=0;
+    long double X,Y,Z;
+    X = abs(v->x); 
+    Y = abs(v->y); 
+    Z = abs(v->z); 
+
+    if ( (X >= Y) && (X >= Z)) {
+        D=0;
+    } else if ( (Y >= X) && (Y >= Z)) {
+        D=1;
+    } else if ( (Z >= X) && (Z >= Y)) {
+        D=2;
+    }
+    return D;
+}
+
 // int main(){
 //     // Variable definition
 //     VECTOR v1 = {x: 3.0, y: 1.0, z: 2.0};

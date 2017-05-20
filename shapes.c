@@ -2,6 +2,7 @@
 
 #include <math.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <stdarg.h>
 #include "point.h"
 
@@ -250,7 +251,32 @@ void printPolygon(POLYGON_PTR p){
         (p->plane).A, (p->plane).B, (p->plane).C, (p->plane).D);   
 
 }
+//get 2D point
+POINT2D get_2d_point_from_3d_point(POINT_PTR p, int D){
+    POINT2D p2;
+    if (D==0){p2.x=p->y;}
+    else {p2.x=p->x;}
+    
+    if (D<=1){p2.y=p->z;} 
+    else {p2.y=p->y;}
 
+    return p2;
+}
+//
+
+//get intersection
+MAGNITUD_PTR get_polygon_intersection (RAY_PTR ray, POLYGON_PTR polygon) {
+    MAGNITUD_PTR t = get_plane_intersection(ray,&(polygon->plane));
+    
+    if (t != NULL) {
+        POINT intersection = get_point_from_ray(ray,t->t);
+        VECTOR N = get_normal_plane(&(polygon->plane));
+        int max_dir = max_direction(&N);
+
+    }
+
+    return t;
+}
 
 // END POLYGON /////////////////////////////////////////////
 

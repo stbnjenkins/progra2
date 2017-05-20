@@ -44,7 +44,9 @@ void window_runner(int resx, int resy) {
 }
 
 int main(int argc, char **argv){
-        // POINT p1 = {x: 4.0, y: 4.0, z: 4.0};
+         POINT p1 = {x: 1.0, y: 2.0, z: 3.0};
+         POINT2D p2 = get_2d_point_from_3d_point(&p1, 2);
+         printf("X = %Lf,\tY = %Lf\n",p2.x,p2.y);
         // POINT p2 = {x: 6.0, y: 4.0, z: 4.0};
         // POINT p3 = {x: 6.0, y: 6.0, z: 6.0};
         // POINT p4 = {x: 10.0, y: 2.0, z: 4.0};
