@@ -58,6 +58,7 @@ int main(int argc, char **argv){
         addVertex(&poly2, p4);
         addVertex(&poly2, p5);
         addVertex(&poly2, p6);
+        put_plane_on_polygon(&poly2);
         printPolygon(&poly2);
     // get parameters
     if (argc != 1) {
@@ -67,7 +68,7 @@ int main(int argc, char **argv){
 
     //Ini resolution
     resx = 1110;
-    resy = 660;
+    resy = 750;
 
     window_runner(resx, resy);
 }

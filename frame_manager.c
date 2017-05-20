@@ -4,10 +4,10 @@
 list create_list_of_shapes(){
 
 //Define Shapes
-    SPHERE s1 = create_sphere((POINT){800.0, 300.0, 1000.0}, 450.0);
+    SPHERE s1 = create_sphere((POINT){800.0, 450.0, 1000.0}, 450.0);
     SPHERE s2 = create_sphere((POINT){950.0, 200.0, 200.0}, 200.0);
-    SPHERE s3 = create_sphere((POINT){100.0, 300.0, 2000.0}, 450.0);
-    SPHERE s4 = create_sphere((POINT){160.0, 180.0, 400.0}, 250.0);
+    SPHERE s3 = create_sphere((POINT){100.0, 450.0, 2000.0}, 450.0);
+    SPHERE s4 = create_sphere((POINT){160.0, 250.0, 400.0}, 250.0);
     PLANE p1 = create_plane(0, 1, 0, 0);
 
 //Put shape attribute kd,,ka,c1,c2,c3

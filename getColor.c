@@ -1,6 +1,6 @@
 #include <math.h>
 
-//// SPHERE COLOR /////////////////////////////////////////////////////////
+//// PARTIAL CALCULUS /////////////////////////////////////////////////////////
 //Get Partial Especular
 long double get_partial_especular(long double product, long double Distance, long double Ks, long double Ip, long double c1, long double c2, long double c3){
     long double partial_E, Fatt;
@@ -26,17 +26,16 @@ long double get_partial_intensity(long double product, long double Distance, lon
     return partial_I;
 }
 
-//Get Color for spheres
-COLOR get_sphere_color (SPHERE_PTR sphere, COLOR color, POINT intersection, PointNodePtr Light_list, long double Kd, long double Ks, long double c1,long double c2, long double c3, long double Ka, long double Kn) {
+//// SHAPE COLOR /////////////////////////////////////////////////////////
+//Get Color for any shape
+COLOR get_shape_color (VECTOR N, COLOR color, POINT intersection, PointNodePtr Light_list, long double Kd, long double Ks, long double c1,long double c2, long double c3, long double Ka, long double Kn) {
     PointNodePtr my_ptr;
-    VECTOR L,N,V,R;
+    VECTOR L,V,R;
     COLOR final_color;
     long double Distance, productLN, productVR, I, E, Ip, Final_I, Final_E;
 
     Final_I = 0;
     Final_E = 0;
-
-    N = get_normal_sphere(sphere, intersection);
 
     if (Light_list== NULL || !Enable_intensity ){
         final_color = color;
@@ -90,13 +89,14 @@ COLOR get_sphere_color (SPHERE_PTR sphere, COLOR color, POINT intersection, Poin
     return final_color;
 
 }
-//// SPHERE COLOR /////////////////////////////////////////////////////////
+
 
 //// GET COLOR ////////////////////////////////////////////////////////////
 //Get Color
 COLOR get_color(SHAPE_PTR shape, POINT intersection, PointNodePtr Light_list){
     int id = shape->id;
     long double Kd, Ks, Ka, Kn, Ip, c1, c2, c3;
+    VECTOR N;
     COLOR final_color, base_color;
     
     base_color = shape->color;
@@ -111,7 +111,13 @@ COLOR get_color(SHAPE_PTR shape, POINT intersection, PointNodePtr Light_list){
 //Color for spheres
     if (id == 0){
         SPHERE s = (shape->shape).sphere;
-        final_color = get_sphere_color (&s, base_color,intersection, Light_list, Kd, Ks, c1, c2, c3, Ka, Kn);
+        N = get_normal_sphere(&s, intersection);
+        final_color = get_shape_color (N, base_color,intersection, Light_list, Kd, Ks, c1, c2, c3, Ka, Kn);
+    } 
+    else if (id == 2){
+        PLANE p = (shape->shape).plane;
+        N = get_normal_plane(&p);
+        final_color = get_shape_color (N, base_color,intersection, Light_list, Kd, Ks, c1, c2, c3, Ka, Kn);
     }
 
     return final_color;

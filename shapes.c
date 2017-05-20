@@ -160,6 +160,17 @@ MAGNITUD_PTR get_plane_intersection (RAY_PTR ray, PLANE_PTR plane) {
     return t;
 }
 
+//Get Normal on Plane
+VECTOR get_normal_plane(PLANE_PTR plane) {
+    VECTOR vector;    
+    vector.x=plane->A;
+    vector.y=plane->B; 
+    vector.z=plane->C;
+    normalizeVector(&vector);
+    return vector;
+}
+
+
 // END PLANE ////////////////////////////////////////////////
 
 
@@ -167,23 +178,10 @@ MAGNITUD_PTR get_plane_intersection (RAY_PTR ray, PLANE_PTR plane) {
 typedef struct polygon{
     int num_vertex;
     POINT vertex[MAX_VERTEX];
+    PLANE plane;
 } POLYGON, *POLYGON_PTR;
 
-// create a plane
-POLYGON create_polygon(int n_vertex, ...){
-    POLYGON p;
-    p.num_vertex = n_vertex;
-    va_list ap;
-    va_start(ap, n_vertex);
-    // va_arg(ap, POINT);
-    int ii;
-    for (ii = 0; ii < n_vertex; ii++){
-        (p.vertex)[ii] = va_arg(ap, POINT);
-    }
-    va_end(ap);
-    return p;
-}
-
+//create polygon
 POLYGON create_empty_polygon(){
     POLYGON p;
     p.num_vertex = 0;
@@ -195,22 +193,66 @@ void addVertex(POLYGON_PTR p, POINT v){
     p->num_vertex++;
     return;
 };
-// print a plane
+
+// get a plane from points
+PLANE get_plane_from_points(POINT p1, POINT p2, POINT p3){
+    PLANE plane;
+    long double A, B, C, D;
+    VECTOR N,v1,v2;
+    v1 = getNormVectorFromPoints(p1,p2);
+    v2 = getNormVectorFromPoints(p1,p3);
+    N = vectorCrossProduct(&v1,&v2);
+    if (N.y < 0) {N = vectorScale(&N,-1.0);};
+
+    plane.A = N.x;
+    plane.B = N.y;
+    plane.C = N.z;  
+    plane.D = -((p1.x * N.x) + (p1.y * N.y) + (p1.z * N.z));  
+
+    return plane;
+};
+
+//add the plane into polygon
+void put_plane_on_polygon(POLYGON_PTR p){
+    if (p->num_vertex >= 3) {
+        POINT p1,p2,p3;
+        p1 = p->vertex[0];
+        p2 = p->vertex[1];
+        p3 = p->vertex[2];
+        PLANE plane = get_plane_from_points(p1, p2, p3);
+        p->plane = plane;
+    }
+};
+
+// create a poligon
+POLYGON create_polygon(int n_vertex, ...){
+    POLYGON p;
+    p.num_vertex = n_vertex;
+    va_list ap;
+    va_start(ap, n_vertex);
+    // va_arg(ap, POINT);
+    int ii;
+    for (ii = 0; ii < n_vertex; ii++){
+        (p.vertex)[ii] = va_arg(ap, POINT);
+    }
+    va_end(ap);
+    put_plane_on_polygon(&p);
+    return p;
+}
+
+// print a polygon
 void printPolygon(POLYGON_PTR p){
     printf("[polygon] number_vertex = %d\n", p->num_vertex);
     for(int kk = 0; kk < p->num_vertex; kk++){
         printf("\t[vertex] (%Lf, %Lf, %Lf)\n", ((p->vertex)[kk]).x, ((p->vertex)[kk]).y, ((p->vertex)[kk]).z);
     }
+    printf("[plane] A = %Lf,\tB = %Lf\tC = %Lf\tD = %Lf\n", 
+        (p->plane).A, (p->plane).B, (p->plane).C, (p->plane).D);   
+
 }
 
 
-
-
-
 // END POLYGON /////////////////////////////////////////////
-
-
-
 
 // SHAPE STRUCT ///////////////////////////////////////////
 
@@ -218,6 +260,7 @@ typedef union shape_u{
         SPHERE sphere;
         CONE cone;
         PLANE plane;
+        POLYGON polygon;
         // other shapes
 } SHAPE_U;
 
