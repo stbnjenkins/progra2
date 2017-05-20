@@ -123,7 +123,7 @@ PLANE create_plane(long double A, long double B, long double C, long double D){
 }
 // print a plane
 void planePrint(PLANE_PTR c){
-    printf("[plane] A = %Lf,\tB = %Lf\tC = %Lf\nD = %Lf\n", 
+    printf("[plane] A = %Lf,\tB = %Lf\tC = %LfD = %Lf\n", 
         c->A, c->B, c->C, c->D);
 }
 
@@ -313,6 +313,9 @@ void printShape(SHAPE_PTR s){
             break;
         case PLANE_ID:
             planePrint(&(s->shape).plane);
+            break;
+        case POLYGON_ID:
+            printPolygon(&(s->shape).polygon);
             break;
         default:
             printf("Not a valid figure");
