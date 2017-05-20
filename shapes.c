@@ -1,8 +1,11 @@
-#include "point.h"
+#define MAX_VERTEX 20
+
 #include <math.h>
 #include <stdio.h>
+#include <stdarg.h>
+#include "point.h"
 
-enum shape_id {SPHERE_ID, CONE_ID, SQUARE_ID};
+enum shape_id {SPHERE_ID, CONE_ID, POLYGON_ID};
 
 // SPHERE //////////////////////////////////////////////////
 typedef struct sphere{
@@ -158,6 +161,56 @@ MAGNITUD_PTR get_plane_intersection (RAY_PTR ray, PLANE_PTR plane) {
 }
 
 // END PLANE ////////////////////////////////////////////////
+
+
+// START POLYGON ///////////////////////////////////////////
+typedef struct polygon{
+    int num_vertex;
+    POINT vertex[MAX_VERTEX];
+} POLYGON, *POLYGON_PTR;
+
+// create a plane
+POLYGON create_polygon(int n_vertex, ...){
+    POLYGON p;
+    p.num_vertex = n_vertex;
+    va_list ap;
+    va_start(ap, n_vertex);
+    // va_arg(ap, POINT);
+    int ii;
+    for (ii = 0; ii < n_vertex; ii++){
+        (p.vertex)[ii] = va_arg(ap, POINT);
+    }
+    va_end(ap);
+    return p;
+}
+
+POLYGON create_empty_polygon(){
+    POLYGON p;
+    p.num_vertex = 0;
+    return p;
+};
+
+void addVertex(POLYGON_PTR p, POINT v){
+    (p->vertex)[p->num_vertex] = v;
+    p->num_vertex++;
+    return;
+};
+// print a plane
+void printPolygon(POLYGON_PTR p){
+    printf("[polygon] number_vertex = %d\n", p->num_vertex);
+    for(int kk = 0; kk < p->num_vertex; kk++){
+        printf("\t[vertex] (%Lf, %Lf, %Lf)\n", ((p->vertex)[kk]).x, ((p->vertex)[kk]).y, ((p->vertex)[kk]).z);
+    }
+}
+
+
+
+
+
+// END POLYGON /////////////////////////////////////////////
+
+
+
 
 // SHAPE STRUCT ///////////////////////////////////////////
 
