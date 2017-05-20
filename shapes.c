@@ -5,7 +5,7 @@
 #include <stdarg.h>
 #include "point.h"
 
-enum shape_id {SPHERE_ID, CONE_ID, POLYGON_ID};
+enum shape_id {SPHERE_ID, CONE_ID,  PLANE_ID, POLYGON_ID,};
 
 // SPHERE //////////////////////////////////////////////////
 typedef struct sphere{
@@ -284,6 +284,9 @@ void printShape(SHAPE_PTR s){
                 (s->color.r), (s->color.g), (s->color.b), s->Kd, s->c1, s->c2, s->c3);
             printf("\t[cone] center = (%Lf, %Lf, %Lf)\tradius = %Lf\theight = %Lf\n", (s->shape).cone.center.x, 
                 (s->shape).cone.center.y,(s->shape).cone.center.z, (s->shape).cone.radius, (s->shape).cone.height);
+            break;
+        case PLANE_ID:
+            planePrint(&(s->shape).plane);
             break;
         default:
             printf("Not a valid figure");
