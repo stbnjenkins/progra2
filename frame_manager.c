@@ -52,7 +52,8 @@ void frame_plotter (int resx, int resy, list shapeList, POINT eye){
 //Initialize frame
 void initialize_frame(int resx, int resy){
     list_destroy(&shapeList);
-    shapeList = create_list_of_shapes();
+    // shapeList = create_list_of_shapes();
+    shapeList = parseFile();
     frame_plotter (resx, resy, shapeList, eye); 
 }
 
