@@ -126,9 +126,34 @@ void planePrint(PLANE_PTR c){
 //get intersection
 MAGNITUD_PTR get_plane_intersection (RAY_PTR ray, PLANE_PTR plane) {
     MAGNITUD_PTR t = NULL;
+    MAGNITUD my_t;
+    long double D, productPwD, Xe, Ye, Ze, temp;
 
+    //Normalizing the plane
+    POINT ini,fin;
+    VECTOR N;
+    ini.x=0;ini.y=0;ini.z=0;
+    fin.x=plane->A;
+    fin.y=plane->B; 
+    fin.z=plane->C;
 
+    D = (plane->D)/(getDistance(ini,fin));
+    N.x=plane->A;
+    N.y=plane->B; 
+    N.z=plane->C;
+    normalizeVector(&N);
 
+    //calculating t
+    productPwD = vectorDotProduct(&N,&(ray->vector));
+    if (productPwD != 0) {
+        Xe = (ray->point).x; Ye = (ray->point).y; Ze = (ray->point).z;
+
+        temp = ((plane->A)*Xe) + ((plane->B)*Ye) + ((plane->C)*Ze) + D;
+
+        my_t.t=-(temp)/productPwD;
+        t=&my_t;
+    }
+   
     return t;
 }
 
