@@ -8,14 +8,14 @@ list create_list_of_shapes(){
     SPHERE s2 = create_sphere((POINT){950.0, 200.0, 200.0}, 200.0);
     SPHERE s3 = create_sphere((POINT){100.0, 300.0, 2000.0}, 450.0);
     SPHERE s4 = create_sphere((POINT){160.0, 180.0, 400.0}, 250.0);
-    PLANE p1 = create_plane((POINT){555, 0.0, 0.0}, 1000, 1000);
+    PLANE p1 = create_plane(1000, 1000, 1000, 1000);
 
 //Put shape attribute kd,,ka,c1,c2,c3
-    SHAPE x1 = {0, ((COLOR){0.0,1.0,0.0}), 1.0,1.0,0.5,2.0,0.0,0.0, (SHAPE_U)s1};
-    SHAPE x2 = {0, ((COLOR){0.0,0.0,1.0}), 1.0,1.0,0.1,2.0,0.0,0.0, (SHAPE_U)s2};
-    SHAPE x3 = {0, ((COLOR){1.0,0.0,0.0}), 1.0,1.0,0.9,2.0,0.0,0.0, (SHAPE_U)s3};
-    SHAPE x4 = {0, ((COLOR){1.0,0.93,0.0}), 1.0,1.0,0.7,2.0,0.0,0.0, (SHAPE_U)s4};
-    SHAPE x5 = {2, ((COLOR){0.5,0.5,0.5}), 1.0, 1.0,1.0,1.0,1.0,0.0, (SHAPE_U)p1};
+    SHAPE x1 = {0, ((COLOR){0.0,1.0,0.0}), 1.0,1.0,0.5,10.0,2.0,0.0,0.0, (SHAPE_U)s1};
+    SHAPE x2 = {0, ((COLOR){0.0,0.0,1.0}), 1.0,1.0,0.1,10.0,2.0,0.0,0.0, (SHAPE_U)s2};
+    SHAPE x3 = {0, ((COLOR){1.0,0.0,0.0}), 1.0,1.0,0.9,10.0,2.0,0.0,0.0, (SHAPE_U)s3};
+    SHAPE x4 = {0, ((COLOR){1.0,0.93,0.0}), 1.0,1.0,0.7,10.0,2.0,0.0,0.0, (SHAPE_U)s4};
+    SHAPE x5 = {2, ((COLOR){0.5,0.5,0.5}), 1.0, 1.0,1.0,10.0,1.0,1.0,0.0, (SHAPE_U)p1};
 
 //Create List
     list_new(&shapeList, sizeof(SHAPE), NULL);

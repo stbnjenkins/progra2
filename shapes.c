@@ -109,20 +109,18 @@ void conePrint(CONE_PTR c){
 
 // PLANE /////////////////////////////////////////////////////
 typedef struct plane{
-    long double lenght;
-    long double width;
-    POINT center;
+    long double A,B,C,D;
 } PLANE, *PLANE_PTR;
 
 // create a plane
-PLANE create_plane(POINT c, long double l, long double w){
-    PLANE new_plane = {lenght: l, width: w, center: c};
+PLANE create_plane(long double A, long double B, long double C, long double D){
+    PLANE new_plane = {A: A, B: B, C: C, D:D};
     return new_plane;
 }
 // print a plane
 void planePrint(PLANE_PTR c){
-    printf("[plane] center = (%Lf, %Lf, %Lf)\tlenght = %Lf\twidth = %Lf\n", 
-        (c->center).x, (c->center).y,(c->center).z, c->lenght, c->width);
+    printf("[plane] A = %Lf,\tB = %Lf\tC = %Lf\nD = %Lf\n", 
+        c->A, c->B, c->C, c->D);
 }
 
 //get intersection
@@ -148,7 +146,7 @@ typedef union shape_u{
 typedef struct shape{
     int id;
     COLOR color;
-    long double Kd, Ks, Ka, c1, c2, c3;
+    long double Kd, Ks, Ka, Kn, c1, c2, c3;
     SHAPE_U shape;
 }SHAPE, *SHAPE_PTR;
 

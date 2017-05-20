@@ -21,14 +21,13 @@ long double get_partial_intensity(long double product, long double Distance, lon
     Fatt = 1 / (c1 + (Distance*c2) + (powl(Distance,2)*c3));
     
     if (Fatt > 1) {Fatt = 1;}
-    if(product < 0) product = 0;
     partial_I = (product) * Kd * Ip * Fatt ;
 
     return partial_I;
 }
 
 //Get Color for spheres
-COLOR get_sphere_color (SPHERE_PTR sphere, COLOR color, POINT intersection, PointNodePtr Light_list, long double Kd, long double Ks, long double c1,long double c2, long double c3, long double Ka) {
+COLOR get_sphere_color (SPHERE_PTR sphere, COLOR color, POINT intersection, PointNodePtr Light_list, long double Kd, long double Ks, long double c1,long double c2, long double c3, long double Ka, long double Kn) {
     PointNodePtr my_ptr;
     VECTOR L,N,V,R;
     COLOR final_color;
@@ -55,7 +54,7 @@ COLOR get_sphere_color (SPHERE_PTR sphere, COLOR color, POINT intersection, Poin
                 Ip = my_ptr->Ip;
                 L = getNormVectorFromPoints(intersection,my_ptr->point);
                 productLN = vectorDotProduct(&L, &N);
- 
+                if(productLN < 0) productLN = 0;
                 Distance = getDistance(intersection, my_ptr->point);
                 I = get_partial_intensity(productLN, Distance, Kd, Ip, c1, c2, c3);
                 Final_I = Final_I + I;
@@ -65,6 +64,8 @@ COLOR get_sphere_color (SPHERE_PTR sphere, COLOR color, POINT intersection, Poin
                     R = vectorScale (&N, (productLN * 2));
                     R = vectorDiff (&R,&L);
                     productVR = vectorDotProduct(&V,&R);
+                    if(productVR < 0) productVR = 0;
+                    productVR = (powl(productVR,Kn));
                     E = get_partial_especular(productVR, Distance, Ks, Ip, c1, c2, c3);
                     Final_E = Final_E + E; 
                 }
@@ -95,13 +96,14 @@ COLOR get_sphere_color (SPHERE_PTR sphere, COLOR color, POINT intersection, Poin
 //Get Color
 COLOR get_color(SHAPE_PTR shape, POINT intersection, PointNodePtr Light_list){
     int id = shape->id;
-    long double Kd, Ks, Ka, Ip, c1, c2, c3;
+    long double Kd, Ks, Ka, Kn, Ip, c1, c2, c3;
     COLOR final_color, base_color;
     
     base_color = shape->color;
     Kd = shape->Kd;
     Ks = shape->Ks;
     Ka = shape->Ka;
+    Kn = shape->Kn;
     c1 = shape->c1;
     c2 = shape->c2;
     c3 = shape->c3;
@@ -109,7 +111,7 @@ COLOR get_color(SHAPE_PTR shape, POINT intersection, PointNodePtr Light_list){
 //Color for spheres
     if (id == 0){
         SPHERE s = (shape->shape).sphere;
-        final_color = get_sphere_color (&s, base_color,intersection, Light_list, Kd, Ks, c1, c2, c3, Ka);
+        final_color = get_sphere_color (&s, base_color,intersection, Light_list, Kd, Ks, c1, c2, c3, Ka, Kn);
     }
 
     return final_color;
