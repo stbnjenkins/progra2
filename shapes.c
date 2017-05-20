@@ -204,6 +204,7 @@ PLANE get_plane_from_points(POINT p1, POINT p2, POINT p3){
     v2 = getNormVectorFromPoints(p1,p3);
     N = vectorCrossProduct(&v1,&v2);
     if (N.y < 0) {N = vectorScale(&N,-1.0);};
+    normalizeVector(&N);
 
     plane.A = N.x;
     plane.B = N.y;
@@ -262,19 +263,80 @@ POINT2D get_2d_point_from_3d_point(POINT_PTR p, int D){
 
     return p2;
 }
-//
+//get 2D point with intersection in 0,0
+POINT2D get_2d_point_with_intersection(POINT_PTR p, POINT_PTR intersection, int D){
+    POINT2D inter,p2;
+
+    inter = get_2d_point_from_3d_point(intersection,D);
+    p2 = get_2d_point_from_3d_point(p,D);
+
+    p2.x = p2.x - inter.x;
+    p2.y = p2.y - inter.y;
+
+    return p2;
+}
+
+//get cross wall
+int cross_wall (POINT_PTR ini, POINT_PTR fin, POINT_PTR intersection, int D){
+    int cross = 0;
+
+    POINT2D p1 = get_2d_point_with_intersection(ini, intersection, D);
+    POINT2D p2 = get_2d_point_with_intersection(fin, intersection, D);
+
+    //rechazos triviales
+    if ((p1.x<0 && p2.x<0) || (p1.y<0 && p2.y<0) || (p1.y>0 && p2.y>0)) {
+        cross = 0;
+    }
+    //Aceptacion trivial
+    else if ((p1.x>0 && p2.x>0) && ((p1.y<0 && p2.y>0) || (p1.y>0 && p2.y<0))){
+        cross = 1;
+    }
+    //caso complejo
+    else if (((p1.x>0 && p2.x<0) || (p1.x<0 && p2.x>0)) && ((p1.y<0 && p2.y>0) || (p1.y>0 && p2.y<0))){
+        int inter = (p1.y) - ( ( (p2.y - p1.y) / (p2.x - p1.x) ) * (p1.x) );
+        if (inter > 0) {
+            cross = 1;
+        }
+    }
+
+    // if (cross == 1 ){
+    //     printf("P1: X = %Lf,\tY = %Lf\n",p1.x,p1.y);
+    //     printf("P2: X = %Lf,\tY = %Lf\n",p2.x,p2.y);
+    // }
+    return cross;
+}
 
 //get intersection
 MAGNITUD_PTR get_polygon_intersection (RAY_PTR ray, POLYGON_PTR polygon) {
     MAGNITUD_PTR t = get_plane_intersection(ray,&(polygon->plane));
-    
+    POINT p1,p2;
+
     if (t != NULL) {
         POINT intersection = get_point_from_ray(ray,t->t);
         VECTOR N = get_normal_plane(&(polygon->plane));
         int max_dir = max_direction(&N);
 
-    }
+        int cross_count = 0;
 
+        for(int kk = 0; kk < polygon->num_vertex; kk++){
+            p1 = (polygon->vertex)[kk];
+            if (polygon->num_vertex == (kk+1)) {
+                p2 = (polygon->vertex)[0];      
+            } else {
+                p2 = (polygon->vertex)[kk+1];
+            }
+          
+            cross_count = cross_count + (cross_wall (&p1, &p2, &intersection, max_dir));
+        }
+
+
+
+        if ((cross_count % 2) == 0) {
+            t = NULL;
+        } else {
+            t = get_plane_intersection(ray,&(polygon->plane));
+        } 
+    }
     return t;
 }
 

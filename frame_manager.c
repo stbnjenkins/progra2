@@ -12,7 +12,7 @@ list create_list_of_shapes(){
 
 //Put Table
     POINT p1 = {x: 200.0, y: 200.0, z: 0.0};
-    POINT p2 = {x: 100.0, y: 200.0, z: 800.0};
+    POINT p2 = {x: 200.0, y: 200.0, z: 800.0};
     POINT p3 = {x: 900.0, y: 200.0, z: 800.0};
     POINT p4 = {x: 900.0, y: 200.0, z: 0.0};
     POLYGON poly = create_polygon(4, p1,p2,p3,p4);
@@ -22,8 +22,8 @@ list create_list_of_shapes(){
     SHAPE x2 = {0, ((COLOR){0.0,0.0,1.0}), 1.0,1.0,0.1,10.0,2.0,0.0,0.0, (SHAPE_U)s2};
     SHAPE x3 = {0, ((COLOR){1.0,0.0,0.0}), 1.0,1.0,0.9,10.0,2.0,0.0,0.0, (SHAPE_U)s3};
     SHAPE x4 = {0, ((COLOR){1.0,0.93,0.0}), 1.0,1.0,0.7,10.0,2.0,0.0,0.0, (SHAPE_U)s4};
-    SHAPE x5 = {2, ((COLOR){0.5,0.5,0.5}), 1.0, 1.0,1.0,10.0,1.0,1.0,0.0, (SHAPE_U)pl};
-    SHAPE x6 = {3, ((COLOR){0.8,0.8,0.8}), 1.0, 1.0,1.0,10.0,1.0,1.0,0.0, (SHAPE_U)poly};
+    SHAPE x5 = {2, ((COLOR){0.5,0.5,0.5}), 1.0, 1.0,1.0,10.0,2.0,0.0,0.0, (SHAPE_U)pl};
+    SHAPE x6 = {3, ((COLOR){0.8,0.8,0.8}), 1.0, 1.0,1.0,10.0,2.0,0.0,0.0, (SHAPE_U)poly};
 
 //Create List
     list_new(&shapeList, sizeof(SHAPE), NULL);
@@ -61,7 +61,7 @@ void frame_plotter (int resx, int resy, list shapeList, POINT eye){
 //Initialize frame
 void initialize_frame(int resx, int resy){
     list_destroy(&shapeList);
-    // shapeList = create_list_of_shapes();
+    shapeList = create_list_of_shapes();
     shapeList = parseFile();
     frame_plotter (resx, resy, shapeList, eye); 
 }

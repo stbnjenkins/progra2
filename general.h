@@ -9,9 +9,9 @@ long double Ia = 0.5;
 PointNodePtr Light_list = NULL;
 POINT eye = {x: 550.0, y: 400.0, z:-2000};
 int resx, resy;
-int Enable_intensity = 1;
-int Enable_Shadow = 1;
-int Enable_Especular = 1;
+int Enable_intensity = 0;
+int Enable_Shadow = 0;
+int Enable_Especular = 0;
 
 MAGNITUD_PTR inter;
 SHAPE_PTR ptr = NULL;
