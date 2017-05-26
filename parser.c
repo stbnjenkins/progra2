@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "general.h"
 
-
-list parseFile(){
+void parseFile(){
     FILE *fp;
     char str1[20];
     long double n1,n2,n3,n4;
@@ -21,6 +21,40 @@ list parseFile(){
     // Process file
     while(!feof(fp)){
         fscanf(fp, "%s %Lf %Lf %Lf %Lf", str1, &n1, &n2, &n3, &n4);
+        if(strcmp("EYE", str1) == 0){
+            fscanf(fp, "%s %Lf %Lf %Lf %Lf", str1, &n1, &n2, &n3, &n4);
+            eye.x = n1;
+            eye.y = n2;
+            eye.z = n3;
+            continue;
+        }
+        if(strcmp("IA", str1) == 0){
+            fscanf(fp, "%s %Lf %Lf %Lf %Lf", str1, &n1, &n2, &n3, &n4);
+            Ia = n1;
+            continue;
+        }
+        if(strcmp("ENSITY", str1) == 0){
+            fscanf(fp, "%s %Lf %Lf %Lf %Lf", str1, &n1, &n2, &n3, &n4);
+            Enable_intensity = (int)n1;
+
+            continue;
+        }
+        if(strcmp("SHADOW", str1) == 0){
+            fscanf(fp, "%s %Lf %Lf %Lf %Lf", str1, &n1, &n2, &n3, &n4);
+            Enable_Shadow = (int)n1;
+            continue;
+        }
+        if(strcmp("ESPECULAR", str1) == 0){
+            fscanf(fp, "%s %Lf %Lf %Lf %Lf", str1, &n1, &n2, &n3, &n4);
+            Enable_Especular = (int)n1;
+            continue;
+        }
+        if(strcmp("RESOLUTION", str1) == 0){
+            fscanf(fp, "%s %Lf %Lf %Lf %Lf", str1, &n1, &n2, &n3, &n4);
+            resx = (int)n1;
+            resy = (int)n2;
+            continue;
+        }
         if(strcmp("SPHERE", str1) == 0){
             // radio
             fscanf(fp, "%s %Lf %Lf %Lf %Lf", str1, &n1, &n2, &n3, &n4);
@@ -65,7 +99,7 @@ list parseFile(){
 
             SPHERE s1 = create_sphere(center, r);
             SHAPE x1 = {0, color, kd,ks,ka,kn,c1,c2,c3, (SHAPE_U)s1};
-            printShape(&x1);
+            // printShape(&x1);
             list_append(&shapeList, &x1);
             continue;
         }
@@ -112,13 +146,12 @@ list parseFile(){
 
             PLANE p1 = create_plane(0, 1, 0, 0);
             SHAPE x1 = {2, color, kd,ks,ka,kn,c1,c2,c3, (SHAPE_U)p1};
-            printShape(&x1);
+            // printShape(&x1);
             list_append(&shapeList, &x1);
             continue;
         }
 
         if(strcmp("POLYGON", str1) == 0){
-            printf("ENTRE A POLYGON PAPA \n");
             // vertex
             fscanf(fp, "%s %Lf %Lf %Lf %Lf", str1, &n1, &n2, &n3, &n4);
             v = (int) n1;
@@ -167,7 +200,7 @@ list parseFile(){
 
             put_plane_on_polygon(&poly);
             SHAPE x1 = {3, color, kd,ks,ka,kn,c1,c2,c3, (SHAPE_U)poly};
-            printShape(&x1);
+            // printShape(&x1);
             list_append(&shapeList, &x1);
             continue;
         }
@@ -178,5 +211,5 @@ list parseFile(){
     printf("Closing file...");
     fclose(fp);
     printf("File closed\n");
-    return shapeList;
+    return;
 }

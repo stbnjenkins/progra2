@@ -3,7 +3,7 @@
 //RAY TRACER CODE
 
 //RAy Tracer
-void ray_tracer (list *shapeList, POINT_PTR eye, int resx, int resy, PointNodePtr Light_list){
+void ray_tracer (POINT_PTR eye, int resx, int resy, PointNodePtr Light_list){
     int i, j;
     COLOR color;
     POINT intersection;
@@ -13,7 +13,7 @@ void ray_tracer (list *shapeList, POINT_PTR eye, int resx, int resy, PointNodePt
 
 //First Intersection
             ray = find_ray (eye, i, j);
-            ptr = first_intersection(shapeList);
+            ptr = first_intersection(&shapeList);
 
 //De que color
 

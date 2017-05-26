@@ -1,3 +1,21 @@
+EYE
+xyz 550.0 400.0 -1000
+
+IA
+ia 0.5
+
+RESOLUTION
+xyz 1110 700
+
+INTENSITY
+vv 1.0
+
+SHADOW
+vv 1.0
+
+ESPECULAR
+vv 1.0
+
 SPHERE
 r 450.0
 center 800.0 450.0 1000.0
