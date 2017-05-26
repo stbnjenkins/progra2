@@ -95,8 +95,8 @@ COLOR get_shape_color (VECTOR N, COLOR color, POINT intersection, PointNodePtr L
 //Get Color
 COLOR get_color(SHAPE_PTR shape, POINT intersection, PointNodePtr Light_list){
     int id = shape->id;
-    long double Kd, Ks, Ka, Kn, Ip, c1, c2, c3;
-    VECTOR N;
+    long double Kd, Ks, Ka, Kn, Ip, c1, c2, c3, dotprod;
+    VECTOR N,D;
     COLOR final_color, base_color;
     
     base_color = shape->color;
@@ -117,11 +117,17 @@ COLOR get_color(SHAPE_PTR shape, POINT intersection, PointNodePtr Light_list){
     else if (id == 2){
         PLANE p = (shape->shape).plane;
         N = get_normal_plane(&p);
+        D = getNormVectorFromPoints (eye,intersection);
+        dotprod = vectorDotProduct (&N,&D);
+        if (dotprod > 0 ) {N=vectorScale(&N,-1);}
         final_color = get_shape_color (N, base_color,intersection, Light_list, Kd, Ks, c1, c2, c3, Ka, Kn);
     }
     else if (id == 3){
         PLANE p = ((shape->shape).polygon).plane;
         N = get_normal_plane(&p);
+        D = getNormVectorFromPoints (eye,intersection);
+        dotprod = vectorDotProduct (&N,&D);
+        if (dotprod > 0 ) {N=vectorScale(&N,-1);}
         final_color = get_shape_color (N, base_color,intersection, Light_list, Kd, Ks, c1, c2, c3, Ka, Kn);
     }
 
