@@ -18,10 +18,11 @@
 #include "keyboard_input.c"
 
 //Run the window
-void window_runner(int resx, int resy) {
+void window_runner() {
 
     // Making calculations
     create_list_of_lights();
+    parseFile();
 
     //starting window
     char *myargv[1];
@@ -38,8 +39,6 @@ void window_runner(int resx, int resy) {
 
     // Define keyboard input
     glutKeyboardFunc(processNormalKeys);
-	glutSpecialFunc(processSpecialKeys);
-
     glutMainLoop();
 }
 
@@ -70,9 +69,5 @@ int main(int argc, char **argv){
         return -1;
     }  
 
-    //Ini resolution
-    resx = 1110;
-    resy = 750;
-
-    window_runner(resx, resy);
+    window_runner();
 }

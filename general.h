@@ -5,17 +5,21 @@ static const long double PI = 3.141592653589793;
 static const long double ENV_LIGHT = 0.17834;
 static const long double EPSILON = 0.0005;
 list shapeList;
-long double Ia = 0.5;
-PointNodePtr Light_list = NULL;
-POINT eye = {x: 550.0, y: 400.0, z:-2000};
-int resx, resy;
-int Enable_intensity = 0;
-int Enable_Shadow = 0;
-int Enable_Especular = 0;
-
 MAGNITUD_PTR inter;
 SHAPE_PTR ptr = NULL;
 RAY ray;
 long double tmin;
+PointNodePtr Light_list = NULL;
+
+// Global parameters (overwritten by read values from file)
+long double Ia;
+POINT eye;
+int resx;
+int resy;
+int Enable_intensity;
+int Enable_Shadow;
+int Enable_Especular;
+
+
 
 #endif /* _GENERAL_H */

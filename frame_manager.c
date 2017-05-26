@@ -48,11 +48,11 @@ void create_list_of_lights() {
 }
 
 //Run plotter
-void frame_plotter (int resx, int resy, list shapeList, POINT eye){
+void frame_plotter (int resx, int resy, POINT eye){
     ini_buffer(resx, resy);
     plot_framebuffer(resx,resy);
 
-    ray_tracer(&shapeList, &eye, resx, resy, Light_list);
+    ray_tracer(&eye, resx, resy, Light_list);
 
     plot_framebuffer(resx,resy);
 
@@ -61,8 +61,7 @@ void frame_plotter (int resx, int resy, list shapeList, POINT eye){
 //Initialize frame
 void initialize_frame(int resx, int resy){
     list_destroy(&shapeList);
-    shapeList = create_list_of_shapes();
-    shapeList = parseFile();
-    frame_plotter (resx, resy, shapeList, eye); 
+    parseFile();
+    frame_plotter (resx, resy, eye); 
 }
 
