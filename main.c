@@ -22,6 +22,7 @@ void window_runner() {
 
     // Making calculations
     create_list_of_lights();
+    list_destroy(&shapeList);
     parseFile();
 
     //starting window
@@ -35,7 +36,10 @@ void window_runner() {
     glClear(GL_COLOR_BUFFER_BIT);
     gluOrtho2D(-0.5, resx +0.5, -0.5, resy + 0.5);
 
-    initialize_frame(resx, resy);
+    ini_buffer(resx, resy);
+    plot_framebuffer(resx,resy);
+
+    frame_plotter (resx, resy, eye);
 
     // Define keyboard input
     glutKeyboardFunc(processNormalKeys);

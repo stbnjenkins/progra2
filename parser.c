@@ -12,6 +12,7 @@ void parseFile(){
     long double r;
     long double a,b,c,d;
     int v, jj;
+    VECTOR myvector;
     printf("Opening file...");
     fp = fopen("test.txt", "r+");
     printf("File opened\n");
@@ -86,7 +87,7 @@ void parseFile(){
 
             //ka
             fscanf(fp, "%s %Lf %Lf %Lf %Lf", str1, &n1, &n2, &n3, &n4);
-            ks = n1;
+            ka = n1;
 
             //kn
             fscanf(fp, "%s %Lf %Lf %Lf %Lf", str1, &n1, &n2, &n3, &n4);
@@ -103,6 +104,62 @@ void parseFile(){
             list_append(&shapeList, &x1);
             continue;
         }
+
+        if(strcmp("MYDISC", str1) == 0){
+            // radio
+            fscanf(fp, "%s %Lf %Lf %Lf %Lf", str1, &n1, &n2, &n3, &n4);
+            r = n1;
+            // centro
+            fscanf(fp, "%s %Lf %Lf %Lf %Lf", str1, &n1, &n2, &n3, &n4);
+            center.x = n1;
+            center.y = n2;
+            center.z = n3;
+
+            // vector
+            fscanf(fp, "%s %Lf %Lf %Lf %Lf", str1, &n1, &n2, &n3, &n4);
+            myvector.x = n1;
+            myvector.y = n2;
+            myvector.z = n3;
+
+            // c1
+            fscanf(fp, "%s %Lf %Lf %Lf %Lf", str1, &n1, &n2, &n3, &n4);
+            c1 = n1;
+
+            // c2
+            fscanf(fp, "%s %Lf %Lf %Lf %Lf", str1, &n1, &n2, &n3, &n4);
+            c2 = n1;
+
+            // c3
+            fscanf(fp, "%s %Lf %Lf %Lf %Lf", str1, &n1, &n2, &n3, &n4);
+            c3 = n1;
+            // kd
+            fscanf(fp, "%s %Lf %Lf %Lf %Lf", str1, &n1, &n2, &n3, &n4);
+            kd = n1;
+
+            //ks
+            fscanf(fp, "%s %Lf %Lf %Lf %Lf", str1, &n1, &n2, &n3, &n4);
+            ks = n1;
+
+            //ka
+            fscanf(fp, "%s %Lf %Lf %Lf %Lf", str1, &n1, &n2, &n3, &n4);
+            ka = n1;
+
+            //kn
+            fscanf(fp, "%s %Lf %Lf %Lf %Lf", str1, &n1, &n2, &n3, &n4);
+            kn = n1;
+            // color
+            fscanf(fp, "%s %Lf %Lf %Lf %Lf", str1, &n1, &n2, &n3, &n4);
+            color.r = n1;
+            color.g = n2;
+            color.b = n3;
+
+            DISC d1 = create_disc(center, r, myvector);
+            SHAPE x1 = {5, color, kd,ks,ka,kn,c1,c2,c3, (SHAPE_U)d1};
+            // printShape(&x1);
+            list_append(&shapeList, &x1);
+            continue;
+        }
+
 
         if(strcmp("PLANE", str1) == 0){
             // coef
@@ -133,7 +190,7 @@ void parseFile(){
 
             //ka
             fscanf(fp, "%s %Lf %Lf %Lf %Lf", str1, &n1, &n2, &n3, &n4);
-            ks = n1;
+            ka = n1;
 
             //kn
             fscanf(fp, "%s %Lf %Lf %Lf %Lf", str1, &n1, &n2, &n3, &n4);
@@ -144,7 +201,7 @@ void parseFile(){
             color.g = n2;
             color.b = n3;
 
-            PLANE p1 = create_plane(0, 1, 0, 0);
+            PLANE p1 = create_plane(a, b, c, d);
             SHAPE x1 = {2, color, kd,ks,ka,kn,c1,c2,c3, (SHAPE_U)p1};
             // printShape(&x1);
             list_append(&shapeList, &x1);
@@ -187,7 +244,7 @@ void parseFile(){
 
             //ka
             fscanf(fp, "%s %Lf %Lf %Lf %Lf", str1, &n1, &n2, &n3, &n4);
-            ks = n1;
+            ka = n1;
 
             //kn
             fscanf(fp, "%s %Lf %Lf %Lf %Lf", str1, &n1, &n2, &n3, &n4);

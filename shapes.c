@@ -6,7 +6,7 @@
 #include <stdarg.h>
 #include "point.h"
 
-enum shape_id {SPHERE_ID, CONE_ID,  PLANE_ID, POLYGON_ID,};
+enum shape_id {SPHERE_ID, CONE_ID,  PLANE_ID, POLYGON_ID, CYLINDER_ID, DISC_ID};
 
 // SPHERE //////////////////////////////////////////////////
 typedef struct sphere{
@@ -340,6 +340,65 @@ MAGNITUD_PTR get_polygon_intersection (RAY_PTR ray, POLYGON_PTR polygon) {
 
 // END POLYGON /////////////////////////////////////////////
 
+
+// START DISC //////////////////////////////////////////////
+typedef struct disc{
+    long double radius;
+    POINT center;
+    VECTOR vector;
+    PLANE plane;
+} DISC, *DISC_PTR;
+
+// get a plane from vector
+PLANE get_plane_from_vector(VECTOR N, POINT c){
+    PLANE plane;
+    normalizeVector(&N);
+    if (N.y > 0 ) {N=vectorScale(&N,-1);}
+
+    plane.A = N.x;
+    plane.B = N.y;
+    plane.C = N.z;  
+    plane.D = -((c.x * N.x) + (c.y * N.y) + (c.z * N.z));  
+
+    return plane;
+};
+
+// Create new disc
+DISC create_disc(POINT c, long double r, VECTOR v){
+    PLANE p = get_plane_from_vector(v, c); 
+    DISC new_disc = {radius: r, center: c, vector: v, plane: p};
+    return new_disc;
+}
+
+// print a disc
+void printDisc(DISC_PTR d){
+    printf("[disc] center = (%Lf, %Lf, %Lf)\tradius = %Lf\t\n", (d->center).x, (d->center).y,(d->center).z, d->radius);
+    printf("[plane] A = %Lf,\tB = %Lf\tC = %Lf\tD = %Lf\n", 
+        (d->plane).A, (d->plane).B, (d->plane).C, (d->plane).D);   
+
+}
+
+//get intersection
+MAGNITUD_PTR get_disc_intersection (RAY_PTR ray, DISC_PTR disc) {
+    MAGNITUD_PTR t = get_plane_intersection(ray,&(disc->plane));
+    long double distance;
+
+    if (t != NULL) {
+        POINT intersection = get_point_from_ray(ray,t->t);
+        distance = getDistance(intersection,(disc->center));
+
+        if (distance > disc->radius) {
+            t = NULL;
+        } else {
+            t = get_plane_intersection(ray,&(disc->plane));
+        } 
+    }
+    return t;
+}
+
+// END DISC //////////////////////////////////////////////
+
+
 // SHAPE STRUCT ///////////////////////////////////////////
 
 typedef union shape_u{
@@ -347,6 +406,7 @@ typedef union shape_u{
         CONE cone;
         PLANE plane;
         POLYGON polygon;
+        DISC disc;
         // other shapes
 } SHAPE_U;
 

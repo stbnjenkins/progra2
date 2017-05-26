@@ -49,8 +49,6 @@ void create_list_of_lights() {
 
 //Run plotter
 void frame_plotter (int resx, int resy, POINT eye){
-    ini_buffer(resx, resy);
-    plot_framebuffer(resx,resy);
 
     ray_tracer(&eye, resx, resy, Light_list);
 
@@ -64,4 +62,6 @@ void initialize_frame(int resx, int resy){
     parseFile();
     frame_plotter (resx, resy, eye); 
 }
+
+
 
