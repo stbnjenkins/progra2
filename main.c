@@ -38,7 +38,7 @@ void window_runner(int resx, int resy) {
 
     // Define keyboard input
     glutKeyboardFunc(processNormalKeys);
-	glutSpecialFunc(processSpecialKeys);
+	// glutSpecialFunc(processSpecialKeys);
 
     glutMainLoop();
 }
