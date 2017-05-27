@@ -58,8 +58,6 @@ void frame_plotter (int resx, int resy, POINT eye){
 
 //Initialize frame
 void initialize_frame(int resx, int resy){
-    list_destroy(&shapeList);
-    parseFile();
     frame_plotter (resx, resy, eye); 
 }
 

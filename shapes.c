@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <stdarg.h>
 #include "point.h"
+#include "cilindro.c"
 
 enum shape_id {SPHERE_ID, CONE_ID,  PLANE_ID, POLYGON_ID, CYLINDER_ID, DISC_ID};
 
@@ -407,6 +408,7 @@ typedef union shape_u{
         PLANE plane;
         POLYGON polygon;
         DISC disc;
+        CYLINDER cylinder;
         // other shapes
 } SHAPE_U;
 

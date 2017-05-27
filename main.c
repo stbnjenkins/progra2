@@ -22,7 +22,6 @@ void window_runner() {
 
     // Making calculations
     create_list_of_lights();
-    list_destroy(&shapeList);
     parseFile();
 
     //starting window
