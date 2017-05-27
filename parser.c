@@ -9,7 +9,7 @@ void parseFile(){
     COLOR color;
     long double kd, ks, ka, kn, c1, c2, c3;
     POINT center, p;
-    long double r;
+    long double r,l;
     long double a,b,c,d;
     int v, jj;
     VECTOR myvector;
@@ -99,7 +99,7 @@ void parseFile(){
             color.b = n3;
 
             SPHERE s1 = create_sphere(center, r);
-            SHAPE x1 = {0, color, kd,ks,ka,kn,c1,c2,c3, (SHAPE_U)s1};
+            SHAPE x1 = {SPHERE_ID, color, kd,ks,ka,kn,c1,c2,c3, (SHAPE_U)s1};
             // printShape(&x1);
             list_append(&shapeList, &x1);
             continue;
@@ -155,7 +155,7 @@ void parseFile(){
 
             normalizeVector(&myvector);
             DISC d1 = create_disc(center, r, myvector);
-            SHAPE x1 = {5, color, kd,ks,ka,kn,c1,c2,c3, (SHAPE_U)d1};
+            SHAPE x1 = {DISC_ID, color, kd,ks,ka,kn,c1,c2,c3, (SHAPE_U)d1};
             // printShape(&x1);
             list_append(&shapeList, &x1);
             continue;
@@ -211,7 +211,67 @@ void parseFile(){
 
             normalizeVector(&myvector);
             CYLINDER cil = create_cylinder(center, r, myvector);
-            SHAPE x1 = {4, color, kd,ks,ka,kn,c1,c2,c3, (SHAPE_U)cil};
+            SHAPE x1 = {CYLINDER_ID, color, kd,ks,ka,kn,c1,c2,c3, (SHAPE_U)cil};
+            // printShape(&x1);
+            list_append(&shapeList, &x1);
+            continue;
+        }
+
+        if(strcmp("FCYLINDER", str1) == 0){
+            // radio
+            fscanf(fp, "%s %Lf %Lf %Lf %Lf", str1, &n1, &n2, &n3, &n4);
+            r = n1;
+
+            // longitud
+            fscanf(fp, "%s %Lf %Lf %Lf %Lf", str1, &n1, &n2, &n3, &n4);
+            l = n1;
+            // centro
+            fscanf(fp, "%s %Lf %Lf %Lf %Lf", str1, &n1, &n2, &n3, &n4);
+            center.x = n1;
+            center.y = n2;
+            center.z = n3;
+
+            // vector Q
+            fscanf(fp, "%s %Lf %Lf %Lf %Lf", str1, &n1, &n2, &n3, &n4);
+            myvector.x = n1;
+            myvector.y = n2;
+            myvector.z = n3;
+
+            // c1
+            fscanf(fp, "%s %Lf %Lf %Lf %Lf", str1, &n1, &n2, &n3, &n4);
+            c1 = n1;
+
+            // c2
+            fscanf(fp, "%s %Lf %Lf %Lf %Lf", str1, &n1, &n2, &n3, &n4);
+            c2 = n1;
+
+            // c3
+            fscanf(fp, "%s %Lf %Lf %Lf %Lf", str1, &n1, &n2, &n3, &n4);
+            c3 = n1;
+            // kd
+            fscanf(fp, "%s %Lf %Lf %Lf %Lf", str1, &n1, &n2, &n3, &n4);
+            kd = n1;
+
+            //ks
+            fscanf(fp, "%s %Lf %Lf %Lf %Lf", str1, &n1, &n2, &n3, &n4);
+            ks = n1;
+
+            //ka
+            fscanf(fp, "%s %Lf %Lf %Lf %Lf", str1, &n1, &n2, &n3, &n4);
+            ka = n1;
+
+            //kn
+            fscanf(fp, "%s %Lf %Lf %Lf %Lf", str1, &n1, &n2, &n3, &n4);
+            kn = n1;
+            // color
+            fscanf(fp, "%s %Lf %Lf %Lf %Lf", str1, &n1, &n2, &n3, &n4);
+            color.r = n1;
+            color.g = n2;
+            color.b = n3;
+
+            normalizeVector(&myvector);
+            FCYLINDER cil = create_fcylinder(center, r, myvector, l);
+            SHAPE x1 = {FCYLINDER_ID, color, kd,ks,ka,kn,c1,c2,c3, (SHAPE_U)cil};
             // printShape(&x1);
             list_append(&shapeList, &x1);
             continue;
@@ -259,7 +319,7 @@ void parseFile(){
             color.b = n3;
 
             PLANE p1 = create_plane(a, b, c, d);
-            SHAPE x1 = {2, color, kd,ks,ka,kn,c1,c2,c3, (SHAPE_U)p1};
+            SHAPE x1 = {PLANE_ID, color, kd,ks,ka,kn,c1,c2,c3, (SHAPE_U)p1};
             // printShape(&x1);
             list_append(&shapeList, &x1);
             continue;
@@ -313,7 +373,7 @@ void parseFile(){
             color.b = n3;
 
             put_plane_on_polygon(&poly);
-            SHAPE x1 = {3, color, kd,ks,ka,kn,c1,c2,c3, (SHAPE_U)poly};
+            SHAPE x1 = {POLYGON_ID, color, kd,ks,ka,kn,c1,c2,c3, (SHAPE_U)poly};
             // printShape(&x1);
             list_append(&shapeList, &x1);
             continue;

@@ -40,8 +40,9 @@ ka 0.1
 kn 10.0
 color 0.0 0.0 1.0
 
-CYLINDER
+FCYLINDER
 r 75.0
+l 40.0
 center 500.0 200.0 200.0
 vector 0.2 1.0 0.0
 c1 0.5
