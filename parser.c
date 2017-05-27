@@ -272,7 +272,6 @@ void parseFile(){
             normalizeVector(&myvector);
             FCYLINDER cil = create_fcylinder(center, r, myvector, l);
             SHAPE x1 = {FCYLINDER_ID, color, kd,ks,ka,kn,c1,c2,c3, (SHAPE_U)cil};
-            // printShape(&x1);
             list_append(&shapeList, &x1);
             continue;
         }
