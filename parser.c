@@ -153,6 +153,7 @@ void parseFile(){
             color.g = n2;
             color.b = n3;
 
+            normalizeVector(&myvector);
             DISC d1 = create_disc(center, r, myvector);
             SHAPE x1 = {5, color, kd,ks,ka,kn,c1,c2,c3, (SHAPE_U)d1};
             // printShape(&x1);
@@ -208,6 +209,7 @@ void parseFile(){
             color.g = n2;
             color.b = n3;
 
+            normalizeVector(&myvector);
             CYLINDER cil = create_cylinder(center, r, myvector);
             SHAPE x1 = {4, color, kd,ks,ka,kn,c1,c2,c3, (SHAPE_U)cil};
             // printShape(&x1);
