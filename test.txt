@@ -40,18 +40,31 @@ ka 0.1
 kn 10.0
 color 0.0 0.0 1.0
 
-FCYLINDER
+CYLINDER
 r 75.0
-l 40.0
 center 500.0 200.0 200.0
-vector 0.2 1.0 0.0
+vector -0.2 1.0 0.0
 c1 0.5
 c2 0.0
 c3 0.0
 kd 1.0
 ks 1.0
 ka 0.1
-kn 5.0
+kn 10.0
+color 0.0 0.0 1.0
+
+FCYLINDER
+r 75.0
+l 400.0
+center 500.0 200.0 200.0
+vector 1.0 1.0 0.0
+c1 0.5
+c2 0.0
+c3 0.0
+kd 1.0
+ks 1.0
+ka 0.1
+kn 10.0
 color 0.0 0.0 1.0
 
 SPHERE

@@ -526,9 +526,29 @@ FCYLINDER create_fcylinder(POINT e, long double r, VECTOR v, long double l){
 
 //get intersection
 MAGNITUD_PTR get_fcylinder_intersection (RAY_PTR ray, FCYLINDER_PTR fcylinder) {
-    
-    MAGNITUD_PTR t = NULL;
-    MAGNITUD my_t;
+    MAGNITUD_PTR t = get_cylinder_intersection (ray, &fcylinder->cylinder);
+    long double distance;
+
+    if (t != NULL) {
+        POINT intersection = get_point_from_ray(ray,t->t);
+
+        long double Xq, Yq, Zq, Xo, Yo, Zo, Ldistance, d;
+        Xo = ((fcylinder->cylinder).eje).x; Yo = ((fcylinder->cylinder).eje).y; Zo = ((fcylinder->cylinder).eje).z;
+        Xq = ((fcylinder->cylinder).Q).x; Yq = ((fcylinder->cylinder).Q).y; Zq = ((fcylinder->cylinder).Q).z;
+
+        VECTOR L = getNormVectorFromPoints((fcylinder->cylinder).eje,intersection);
+        Ldistance = getDistance((fcylinder->cylinder).eje,intersection);
+
+        distance = (vectorDotProduct(&((fcylinder->cylinder).Q),&L)*Ldistance);
+
+        if (distance > fcylinder->l) {
+            t = NULL;
+        } else {
+            t = get_cylinder_intersection (ray, &fcylinder->cylinder);
+        } 
+    }
+    return t;
+
 }
 // SHAPE STRUCT ///////////////////////////////////////////
 

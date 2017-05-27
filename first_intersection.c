@@ -18,6 +18,10 @@ bool iterate_shape(void *data){
     else if (id == 5){
         inter = get_disc_intersection (&ray, &((((SHAPE_PTR)data)->shape).disc));
     }
+    else if (id == 6){
+        inter = get_fcylinder_intersection (&ray, &((((SHAPE_PTR)data)->shape).fcylinder));
+    }
+
 
     if (inter != NULL) {
         if ((tmin > inter->t) && (inter->t > EPSILON)) {
