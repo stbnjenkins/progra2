@@ -512,19 +512,24 @@ VECTOR get_normal_cylinder(CYLINDER_PTR cylinder, POINT surface) {
 
 // FINITE CYLINDER //////////////////////////////////////////////////
 typedef struct fcylinder{
-    long double radius;
-    POINT eje;
-    VECTOR Q;
+    CYLINDER cylinder;
     long double l;
 } FCYLINDER, *FCYLINDER_PTR;
 
 // Create new cylinder
 FCYLINDER create_fcylinder(POINT e, long double r, VECTOR v, long double l){
     normalizeVector(&v);
-    FCYLINDER new_fcylinder = {radius: r, eje: e, Q: v, l: l};
+    CYLINDER new_cylinder = {radius: r, eje: e, Q: v};
+    FCYLINDER new_fcylinder = {cylinder: new_cylinder, l: l};
     return new_fcylinder;
 }
 
+//get intersection
+MAGNITUD_PTR get_fcylinder_intersection (RAY_PTR ray, FCYLINDER_PTR fcylinder) {
+    
+    MAGNITUD_PTR t = NULL;
+    MAGNITUD my_t;
+}
 // SHAPE STRUCT ///////////////////////////////////////////
 
 typedef union shape_u{
