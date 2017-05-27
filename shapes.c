@@ -442,17 +442,14 @@ MAGNITUD_PTR get_cylinder_intersection (RAY_PTR ray, CYLINDER_PTR cylinder) {
 
     M = Xe - Xo - (Xe*Xq*Xq) + (Xo*Xq*Xq) - (Ye*Yq*Xq) + (Yo*Yq*Xq) - (Ze*Zq*Xq) + (Zo*Zq*Xq);
     N = Ye - Yo - (Xe*Xq*Yq) + (Xo*Xq*Yq) - (Ye*Yq*Yq) + (Yo*Yq*Yq) - (Ze*Zq*Yq) + (Zo*Zq*Yq);
-    O = Xe - Xo - (Xe*Xq*Zq) + (Xo*Xq*Zq) - (Ye*Yq*Zq) + (Yo*Yq*Zq) - (Ze*Zq*Zq) + (Zo*Zq*Zq);
+    O = Ze - Zo - (Xe*Xq*Zq) + (Xo*Xq*Zq) - (Ye*Yq*Zq) + (Yo*Yq*Zq) - (Ze*Zq*Zq) + (Zo*Zq*Zq);
 
     //calculate A , B, C, D
     A = (F*F)+(G*G)+(H*H);
-    B = (F*M)+(G*N)+(H*O);
+    B = 2*((F*M)+(G*N)+(H*O));
     C = (M*M)+(N*N)+(O*O)-(R*R);
 
     D = (B*B) - (4*A*C);
-
-  //  printf("%Lf\t%Lf\t%Lf",A,B,C);
- //   exit(0);
 
 //Intersection cases
     //One Intersection
