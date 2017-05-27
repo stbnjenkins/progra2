@@ -6,7 +6,7 @@
 #include <stdarg.h>
 #include "point.h"
 
-enum shape_id {SPHERE_ID, CONE_ID,  PLANE_ID, POLYGON_ID, CYLINDER_ID, DISC_ID};
+enum shape_id {SPHERE_ID, CONE_ID,  PLANE_ID, POLYGON_ID, CYLINDER_ID, DISC_ID, FCYLINDER_ID};
 
 // SPHERE //////////////////////////////////////////////////
 typedef struct sphere{
@@ -510,6 +510,21 @@ VECTOR get_normal_cylinder(CYLINDER_PTR cylinder, POINT surface) {
 // END CYLINDER ///////////////////////////////////////////////
 
 
+// FINITE CYLINDER //////////////////////////////////////////////////
+typedef struct fcylinder{
+    long double radius;
+    POINT eje;
+    VECTOR Q;
+    long double l;
+} FCYLINDER, *FCYLINDER_PTR;
+
+// Create new cylinder
+FCYLINDER create_fcylinder(POINT e, long double r, VECTOR v, long double l){
+    normalizeVector(&v);
+    FCYLINDER new_fcylinder = {radius: r, eje: e, Q: v, l: l};
+    return new_fcylinder;
+}
+
 // SHAPE STRUCT ///////////////////////////////////////////
 
 typedef union shape_u{
@@ -519,6 +534,7 @@ typedef union shape_u{
         POLYGON polygon;
         CYLINDER cylinder;
         DISC disc;
+        FCYLINDER fcylinder;
         // other shapes
 } SHAPE_U;
 
