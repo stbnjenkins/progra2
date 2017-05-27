@@ -131,9 +131,9 @@ COLOR get_color(SHAPE_PTR shape, POINT intersection, PointNodePtr Light_list){
         final_color = get_shape_color (N, base_color,intersection, Light_list, Kd, Ks, c1, c2, c3, Ka, Kn);
     }
     else if (id == 4){
-        // PLANE p = ((shape->shape).disc).plane;
-        // N = get_normal_plane(&p);
-        final_color = base_color;
+        CYLINDER c = (shape->shape).cylinder;
+        N = get_normal_cylinder(&c,intersection);
+        final_color = get_shape_color (N, base_color,intersection, Light_list, Kd, Ks, c1, c2, c3, Ka, Kn);
     }
     else if (id == 5){
         PLANE p = ((shape->shape).disc).plane;

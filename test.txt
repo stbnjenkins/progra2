@@ -50,7 +50,7 @@ c3 0.0
 kd 1.0
 ks 1.0
 ka 0.1
-kn 10.0
+kn 5.0
 color 0.0 0.0 1.0
 
 SPHERE

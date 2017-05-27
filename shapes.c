@@ -487,6 +487,26 @@ MAGNITUD_PTR get_cylinder_intersection (RAY_PTR ray, CYLINDER_PTR cylinder) {
 
 }
 
+//Get Normal on cylinder
+VECTOR get_normal_cylinder(CYLINDER_PTR cylinder, POINT surface) {
+    long double Xq, Yq, Zq, Xo, Yo, Zo, Ldistance, d;
+    Xo = (cylinder->eje).x; Yo = (cylinder->eje).y; Zo = (cylinder->eje).z;
+    Xq = (cylinder->Q).x; Yq = (cylinder->Q).y; Zq = (cylinder->Q).z;
+
+    VECTOR L = getNormVectorFromPoints(cylinder->eje,surface);
+    Ldistance = getDistance(cylinder->eje,surface);
+
+    d = (vectorDotProduct(&(cylinder->Q),&L)*Ldistance);
+
+    POINT m;
+    m.x = Xo + (d*Xq);
+    m.y = Yo + (d*Yq);
+    m.z = Zo + (d*Zq);
+
+    VECTOR vector = getNormVectorFromPoints(m,surface);
+    return vector;
+}
+
 // END CYLINDER ///////////////////////////////////////////////
 
 
