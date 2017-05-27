@@ -12,6 +12,9 @@ bool iterate_shape(void *data){
     else if (id == 3){
         inter = get_polygon_intersection (&ray, &((((SHAPE_PTR)data)->shape).polygon));
     }
+    else if (id == 4){
+        inter = get_cylinder_intersection (&ray, &((((SHAPE_PTR)data)->shape).cylinder));
+    }
     else if (id == 5){
         inter = get_disc_intersection (&ray, &((((SHAPE_PTR)data)->shape).disc));
     }

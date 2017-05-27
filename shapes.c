@@ -5,7 +5,6 @@
 #include <stdlib.h>
 #include <stdarg.h>
 #include "point.h"
-#include "cilindro.c"
 
 enum shape_id {SPHERE_ID, CONE_ID,  PLANE_ID, POLYGON_ID, CYLINDER_ID, DISC_ID};
 
@@ -399,6 +398,100 @@ MAGNITUD_PTR get_disc_intersection (RAY_PTR ray, DISC_PTR disc) {
 
 // END DISC //////////////////////////////////////////////
 
+// CYLINDER //////////////////////////////////////////////////
+typedef struct cylinder{
+    long double radius;
+    POINT eje;
+    VECTOR Q;
+} CYLINDER, *CYLINDER_PTR;
+
+// Create new cylinder
+CYLINDER create_cylinder(POINT e, long double r, VECTOR v){
+    normalizeVector(&v);
+    CYLINDER new_cylinder = {radius: r, eje: e, Q: v};
+    return new_cylinder;
+}
+
+// print a cylinder
+void cylinderPrint(CYLINDER_PTR s){
+    printf("[cylinder] eje = (%Lf, %Lf, %Lf)\tQ = (%Lf, %Lf, %Lf)\tradius = %Lf\t\n", (s->eje).x, (s->eje).y,(s->eje).z,(s->Q).x, (s->Q).y,(s->Q).z, s->radius);
+}
+
+//get intersection
+MAGNITUD_PTR get_cylinder_intersection (RAY_PTR ray, CYLINDER_PTR cylinder) {
+    
+    MAGNITUD_PTR t = NULL;
+    MAGNITUD my_t;
+
+    long double F, G, H, M, N, O, A, B, C, D, R;
+    long double Xd, Yd, Zd, Xe, Ye, Ze, Xq, Yq, Zq, Xo, Yo, Zo;
+    long double t1,t2,t3;
+
+
+    Xd = (ray->vector).x; Yd = (ray->vector).y; Zd = (ray->vector).z;
+    Xe = (ray->point).x; Ye = (ray->point).y; Ze = (ray->point).z;
+    Xq = (cylinder->Q).x; Yq = (cylinder->Q).y; Zq = (cylinder->Q).z;
+    Xo = (cylinder->eje).x; Yo = (cylinder->eje).y; Zo = (cylinder->eje).z;
+    R = cylinder->radius;
+
+    //calculate F, G, H, N, M, O
+
+    F = Xd - (Xd*Xq*Xq) - (Yd*Yq*Xq) - (Zd*Zq*Xq);
+    G = Yd - (Xd*Xq*Yq) - (Yd*Yq*Yq) - (Zd*Zq*Yq);
+    H = Zd - (Xd*Xq*Zq) - (Yd*Yq*Zq) - (Zd*Zq*Zq);
+
+    M = Xe - Xo - (Xe*Xq*Xq) + (Xo*Xq*Xq) - (Ye*Yq*Xq) + (Yo*Yq*Xq) - (Ze*Zq*Xq) + (Zo*Zq*Xq);
+    N = Ye - Yo - (Xe*Xq*Yq) + (Xo*Xq*Yq) - (Ye*Yq*Yq) + (Yo*Yq*Yq) - (Ze*Zq*Yq) + (Zo*Zq*Yq);
+    O = Xe - Xo - (Xe*Xq*Zq) + (Xo*Xq*Zq) - (Ye*Yq*Zq) + (Yo*Yq*Zq) - (Ze*Zq*Zq) + (Zo*Zq*Zq);
+
+    //calculate A , B, C, D
+    A = (F*F)+(G*G)+(H*H);
+    B = (F*M)+(G*N)+(H*O);
+    C = (M*M)+(N*N)+(O*O)-(R*R);
+
+    D = (B*B) - (4*A*C);
+
+  //  printf("%Lf\t%Lf\t%Lf",A,B,C);
+ //   exit(0);
+
+//Intersection cases
+    //One Intersection
+    if (D == 0){
+        my_t.t = -B/(2*A);
+        t=&my_t; 
+    } 
+    //2 intersection
+    else if (D > 0) {
+        t1 = (-B - (sqrtl(D))) / (2*A);
+        t2 = (-B + (sqrtl(D))) / (2*A);
+
+        //Order ts = t1 < t2
+        if (t2 < t1) {t3 = t2; t2 = t1; t1 = t3;}
+
+        //cylinder front eye
+        if (t1 > 0){
+            my_t.t = t1;
+            t=&my_t;
+        }
+        //cylinder behind eye
+        else if (t2 < 0) {
+            return t;
+            //no nothing
+        }
+        //eye inside cylinder
+        else if (t1 < 0 && t2 > 0) {
+            my_t.t=t2;  
+            t = &my_t;
+
+        }
+    } 
+
+    return t;
+
+}
+
+// END CYLINDER ///////////////////////////////////////////////
+
 
 // SHAPE STRUCT ///////////////////////////////////////////
 
@@ -407,8 +500,8 @@ typedef union shape_u{
         CONE cone;
         PLANE plane;
         POLYGON polygon;
-        DISC disc;
         CYLINDER cylinder;
+        DISC disc;
         // other shapes
 } SHAPE_U;
 
