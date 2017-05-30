@@ -114,6 +114,15 @@ COLOR get_color(SHAPE_PTR shape, POINT intersection, PointNodePtr Light_list){
         N = get_normal_sphere(&s, intersection);
         final_color = get_shape_color (N, base_color,intersection, Light_list, Kd, Ks, c1, c2, c3, Ka, Kn);
     } 
+    else if (id == CONE_ID){
+        final_color = base_color;
+        // PLANE p = (shape->shape).plane;
+        // N = get_normal_plane(&p);
+        // D = getNormVectorFromPoints (eye,intersection);
+        // dotprod = vectorDotProduct (&N,&D);
+        // if (dotprod > 0 ) {N=vectorScale(&N,-1);}
+        // final_color = get_shape_color (N, base_color,intersection, Light_list, Kd, Ks, c1, c2, c3, Ka, Kn);
+    }
     else if (id == PLANE_ID){
         PLANE p = (shape->shape).plane;
         N = get_normal_plane(&p);

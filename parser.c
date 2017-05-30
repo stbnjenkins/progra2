@@ -9,8 +9,8 @@ void parseFile(){
     COLOR color;
     long double kd, ks, ka, kn, c1, c2, c3;
     POINT center, p;
-    long double r,l;
-    long double a,b,c,d;
+    long double r,l1, l2;
+    long double a,b,c,d,h;
     int v, jj;
     VECTOR myvector;
     printf("Opening file...");
@@ -161,6 +161,65 @@ void parseFile(){
             continue;
         }
 
+       if(strcmp("CONE", str1) == 0){
+            // d
+            fscanf(fp, "%s %Lf %Lf %Lf %Lf", str1, &n1, &n2, &n3, &n4);
+            d = n1;
+            // h
+            fscanf(fp, "%s %Lf %Lf %Lf %Lf", str1, &n1, &n2, &n3, &n4);
+            h = n1;
+            // centro
+            fscanf(fp, "%s %Lf %Lf %Lf %Lf", str1, &n1, &n2, &n3, &n4);
+            center.x = n1;
+            center.y = n2;
+            center.z = n3;
+
+            // vector Q
+            fscanf(fp, "%s %Lf %Lf %Lf %Lf", str1, &n1, &n2, &n3, &n4);
+            myvector.x = n1;
+            myvector.y = n2;
+            myvector.z = n3;
+
+            // c1
+            fscanf(fp, "%s %Lf %Lf %Lf %Lf", str1, &n1, &n2, &n3, &n4);
+            c1 = n1;
+
+            // c2
+            fscanf(fp, "%s %Lf %Lf %Lf %Lf", str1, &n1, &n2, &n3, &n4);
+            c2 = n1;
+
+            // c3
+            fscanf(fp, "%s %Lf %Lf %Lf %Lf", str1, &n1, &n2, &n3, &n4);
+            c3 = n1;
+            // kd
+            fscanf(fp, "%s %Lf %Lf %Lf %Lf", str1, &n1, &n2, &n3, &n4);
+            kd = n1;
+
+            //ks
+            fscanf(fp, "%s %Lf %Lf %Lf %Lf", str1, &n1, &n2, &n3, &n4);
+            ks = n1;
+
+            //ka
+            fscanf(fp, "%s %Lf %Lf %Lf %Lf", str1, &n1, &n2, &n3, &n4);
+            ka = n1;
+
+            //kn
+            fscanf(fp, "%s %Lf %Lf %Lf %Lf", str1, &n1, &n2, &n3, &n4);
+            kn = n1;
+            // color
+            fscanf(fp, "%s %Lf %Lf %Lf %Lf", str1, &n1, &n2, &n3, &n4);
+            color.r = n1;
+            color.g = n2;
+            color.b = n3;
+
+            normalizeVector(&myvector);
+            CONE con = create_cone(center, d, h, myvector);
+            SHAPE x1 = {CONE_ID, color, kd,ks,ka,kn,c1,c2,c3, (SHAPE_U)con};
+            // printShape(&x1);
+            list_append(&shapeList, &x1);
+            continue;
+        } 
+
         if(strcmp("CYLINDER", str1) == 0){
             // radio
             fscanf(fp, "%s %Lf %Lf %Lf %Lf", str1, &n1, &n2, &n3, &n4);
@@ -222,9 +281,12 @@ void parseFile(){
             fscanf(fp, "%s %Lf %Lf %Lf %Lf", str1, &n1, &n2, &n3, &n4);
             r = n1;
 
-            // longitud
+            // longitud l1
             fscanf(fp, "%s %Lf %Lf %Lf %Lf", str1, &n1, &n2, &n3, &n4);
-            l = n1;
+            l1 = n1;
+            // longitud l2
+            fscanf(fp, "%s %Lf %Lf %Lf %Lf", str1, &n1, &n2, &n3, &n4);
+            l2 = n1;
             // centro
             fscanf(fp, "%s %Lf %Lf %Lf %Lf", str1, &n1, &n2, &n3, &n4);
             center.x = n1;
@@ -270,7 +332,7 @@ void parseFile(){
             color.b = n3;
 
             normalizeVector(&myvector);
-            FCYLINDER cil = create_fcylinder(center, r, myvector, l);
+            FCYLINDER cil = create_fcylinder(center, r, myvector, l1, l2);
             SHAPE x1 = {FCYLINDER_ID, color, kd,ks,ka,kn,c1,c2,c3, (SHAPE_U)cil};
             list_append(&shapeList, &x1);
             continue;

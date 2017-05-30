@@ -6,6 +6,9 @@ bool iterate_shape(void *data){
     if (id == 0) {
         inter = get_sphere_intersection (&ray, &((((SHAPE_PTR)data)->shape).sphere));
     }
+    else if (id == 1){
+        inter = get_cone_intersection (&ray, &((((SHAPE_PTR)data)->shape).cone));
+    }
     else if (id == 2){
         inter = get_plane_intersection (&ray, &((((SHAPE_PTR)data)->shape).plane));
     }

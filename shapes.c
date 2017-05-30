@@ -93,21 +93,110 @@ VECTOR get_normal_sphere(SPHERE_PTR sphere, POINT surface) {
 
 // CONE /////////////////////////////////////////////////////
 typedef struct cone{
-    long double radius;
-    long double height;
-    POINT center;
+    long double d, h;
+    POINT eje;
+    VECTOR Q;
 } CONE, *CONE_PTR;
 
 // create a cone
-CONE create_cone(POINT c, long double r, long double h){
-    CONE new_cone = {radius: r, height: h, center: c};
+CONE create_cone(POINT eje, long double d, long double h, VECTOR v){
+    normalizeVector(&v);
+    CONE new_cone = {d: d, h: h, eje: eje, Q : v};
     return new_cone;
 }
-// print a cone
-void conePrint(CONE_PTR c){
-    printf("[cone] center = (%Lf, %Lf, %Lf)\tradius = %Lf\theight = %Lf\n", 
-        (c->center).x, (c->center).y,(c->center).z, c->radius, c->height);
+
+//get intersection
+MAGNITUD_PTR get_cone_intersection (RAY_PTR ray, CONE_PTR cone) {
+    
+    MAGNITUD_PTR t = NULL;
+    MAGNITUD my_t;
+
+    long double F, G, H, M, N, O, J, K, A, B, C, D, R, h, di;
+    long double Xd, Yd, Zd, Xe, Ye, Ze, Xq, Yq, Zq, Xo, Yo, Zo;
+    long double t1,t2,t3;
+
+
+    Xd = (ray->vector).x; Yd = (ray->vector).y; Zd = (ray->vector).z;
+    Xe = (ray->point).x; Ye = (ray->point).y; Ze = (ray->point).z;
+    Xq = (cone->Q).x; Yq = (cone->Q).y; Zq = (cone->Q).z;
+    Xo = (cone->eje).x; Yo = (cone->eje).y; Zo = (cone->eje).z;
+    h = cone->h;
+    di = cone->d;
+
+    //calculate F, G, H, N, M, O
+
+    F = Xd - (Xd*Xq*Xq) - (Yd*Yq*Xq) - (Zd*Zq*Xq);
+    G = Yd - (Xd*Xq*Yq) - (Yd*Yq*Yq) - (Zd*Zq*Yq);
+    H = Zd - (Xd*Xq*Zq) - (Yd*Yq*Zq) - (Zd*Zq*Zq);
+    J = (h / di) * ((Xd*Xq) + (Yd*Yq) + (Zd*Zq));
+
+    M = Xe - Xo - (Xe*Xq*Xq) + (Xo*Xq*Xq) - (Ye*Yq*Xq) + (Yo*Yq*Xq) - (Ze*Zq*Xq) + (Zo*Zq*Xq);
+    N = Ye - Yo - (Xe*Xq*Yq) + (Xo*Xq*Yq) - (Ye*Yq*Yq) + (Yo*Yq*Yq) - (Ze*Zq*Yq) + (Zo*Zq*Yq);
+    O = Ze - Zo - (Xe*Xq*Zq) + (Xo*Xq*Zq) - (Ye*Yq*Zq) + (Yo*Yq*Zq) - (Ze*Zq*Zq) + (Zo*Zq*Zq);
+    K = (h / di) * ((Xe*Xq) - (Xo*Xq) + (Ye*Yq) - (Yo*Yq) + (Ze*Zq) - (Zo*Zq)) ;
+
+    //calculate A , B, C, D
+    A = (F*F)+(G*G)+(H*H)-(J*J);
+    B = 2*((F*M)+(G*N)+(H*O)-(J*K));
+    C = (M*M)+(N*N)+(O*O)-(K*K);
+
+    D = (B*B) - (4*A*C);
+
+//Intersection cases
+    //One Intersection
+    if (D == 0){
+        my_t.t = -B/(2*A);
+        t=&my_t; 
+    } 
+    //2 intersection
+    else if (D > 0) {
+        t1 = (-B - (sqrtl(D))) / (2*A);
+        t2 = (-B + (sqrtl(D))) / (2*A);
+
+        //Order ts = t1 < t2
+        if (t2 < t1) {t3 = t2; t2 = t1; t1 = t3;}
+
+        //cylinder front eye
+        if (t1 > 0){
+            my_t.t = t1;
+            t=&my_t;
+        }
+        //cylinder behind eye
+        else if (t2 < 0) {
+            return t;
+            //no nothing
+        }
+        //eye inside cylinder
+        else if (t1 < 0 && t2 > 0) {
+            my_t.t=t2;  
+            t = &my_t;
+
+        }
+    } 
+
+    return t;
+
 }
+
+// //Get Normal on cylinder
+// VECTOR get_normal_cylinder(CYLINDER_PTR cylinder, POINT surface) {
+//     long double Xq, Yq, Zq, Xo, Yo, Zo, Ldistance, d;
+//     Xo = (cylinder->eje).x; Yo = (cylinder->eje).y; Zo = (cylinder->eje).z;
+//     Xq = (cylinder->Q).x; Yq = (cylinder->Q).y; Zq = (cylinder->Q).z;
+
+//     VECTOR L = getNormVectorFromPoints(cylinder->eje,surface);
+//     Ldistance = getDistance(cylinder->eje,surface);
+
+//     d = (vectorDotProduct(&(cylinder->Q),&L)*Ldistance);
+
+//     POINT m;
+//     m.x = Xo + (d*Xq);
+//     m.y = Yo + (d*Yq);
+//     m.z = Zo + (d*Zq);
+
+//     VECTOR vector = getNormVectorFromPoints(m,surface);
+//     return vector;
+// }
 
 // END CONE ////////////////////////////////////////////////
 
@@ -340,7 +429,6 @@ MAGNITUD_PTR get_polygon_intersection (RAY_PTR ray, POLYGON_PTR polygon) {
 
 // END POLYGON /////////////////////////////////////////////
 
-
 // START DISC //////////////////////////////////////////////
 typedef struct disc{
     long double radius;
@@ -513,40 +601,111 @@ VECTOR get_normal_cylinder(CYLINDER_PTR cylinder, POINT surface) {
 // FINITE CYLINDER //////////////////////////////////////////////////
 typedef struct fcylinder{
     CYLINDER cylinder;
-    long double l;
+    long double l1;
+    long double l2;
 } FCYLINDER, *FCYLINDER_PTR;
 
 // Create new cylinder
-FCYLINDER create_fcylinder(POINT e, long double r, VECTOR v, long double l){
+FCYLINDER create_fcylinder(POINT e, long double r, VECTOR v, long double l1, long double l2){
     normalizeVector(&v);
     CYLINDER new_cylinder = {radius: r, eje: e, Q: v};
-    FCYLINDER new_fcylinder = {cylinder: new_cylinder, l: l};
+    if (l2<l1) {long double l3=l1;l1=l2;l2=l3;}
+    FCYLINDER new_fcylinder = {cylinder: new_cylinder, l1: l1, l2: l2};
     return new_fcylinder;
+}
+
+//Get distance from ray  and t
+long double get_distance_from_ray_and_t (RAY_PTR ray, POINT eje, VECTOR Q, long double t) {
+    long double distance, Ldistance;
+    POINT intersection = get_point_from_ray(ray,t);
+    VECTOR L = getNormVectorFromPoints(eje,intersection);
+    Ldistance = getDistance(eje,intersection);
+    distance = (vectorDotProduct(&Q,&L)*Ldistance);
+
+    return distance;
 }
 
 //get intersection
 MAGNITUD_PTR get_fcylinder_intersection (RAY_PTR ray, FCYLINDER_PTR fcylinder) {
-    MAGNITUD_PTR t = get_cylinder_intersection (ray, &fcylinder->cylinder);
+    
     long double distance;
 
-    if (t != NULL) {
-        POINT intersection = get_point_from_ray(ray,t->t);
+    MAGNITUD_PTR t = NULL;
+    MAGNITUD my_t;
 
-        long double Xq, Yq, Zq, Xo, Yo, Zo, Ldistance, d;
-        Xo = ((fcylinder->cylinder).eje).x; Yo = ((fcylinder->cylinder).eje).y; Zo = ((fcylinder->cylinder).eje).z;
-        Xq = ((fcylinder->cylinder).Q).x; Yq = ((fcylinder->cylinder).Q).y; Zq = ((fcylinder->cylinder).Q).z;
+    long double F, G, H, M, N, O, A, B, C, D, R;
+    long double Xd, Yd, Zd, Xe, Ye, Ze, Xq, Yq, Zq, Xo, Yo, Zo;
+    long double t1,t2,t3;
 
-        VECTOR L = getNormVectorFromPoints((fcylinder->cylinder).eje,intersection);
-        Ldistance = getDistance((fcylinder->cylinder).eje,intersection);
 
-        distance = (vectorDotProduct(&((fcylinder->cylinder).Q),&L)*Ldistance);
+    Xd = (ray->vector).x; Yd = (ray->vector).y; Zd = (ray->vector).z;
+    Xe = (ray->point).x; Ye = (ray->point).y; Ze = (ray->point).z;
+    Xq = ((fcylinder->cylinder).Q).x; Yq = ((fcylinder->cylinder).Q).y; Zq = ((fcylinder->cylinder).Q).z;
+    Xo = ((fcylinder->cylinder).eje).x; Yo = ((fcylinder->cylinder).eje).y; Zo = ((fcylinder->cylinder).eje).z;
+    R = (fcylinder->cylinder).radius;
 
-        if (distance > fcylinder->l) {
-            t = NULL;
-        } else {
-            t = get_cylinder_intersection (ray, &fcylinder->cylinder);
-        } 
-    }
+    //calculate F, G, H, N, M, O
+
+    F = Xd - (Xd*Xq*Xq) - (Yd*Yq*Xq) - (Zd*Zq*Xq);
+    G = Yd - (Xd*Xq*Yq) - (Yd*Yq*Yq) - (Zd*Zq*Yq);
+    H = Zd - (Xd*Xq*Zq) - (Yd*Yq*Zq) - (Zd*Zq*Zq);
+
+    M = Xe - Xo - (Xe*Xq*Xq) + (Xo*Xq*Xq) - (Ye*Yq*Xq) + (Yo*Yq*Xq) - (Ze*Zq*Xq) + (Zo*Zq*Xq);
+    N = Ye - Yo - (Xe*Xq*Yq) + (Xo*Xq*Yq) - (Ye*Yq*Yq) + (Yo*Yq*Yq) - (Ze*Zq*Yq) + (Zo*Zq*Yq);
+    O = Ze - Zo - (Xe*Xq*Zq) + (Xo*Xq*Zq) - (Ye*Yq*Zq) + (Yo*Yq*Zq) - (Ze*Zq*Zq) + (Zo*Zq*Zq);
+
+    //calculate A , B, C, D
+    A = (F*F)+(G*G)+(H*H);
+    B = 2*((F*M)+(G*N)+(H*O));
+    C = (M*M)+(N*N)+(O*O)-(R*R);
+
+    D = (B*B) - (4*A*C);
+
+//Intersection cases
+    //One Intersection
+    if (D == 0){
+        my_t.t = -B/(2*A);
+        t=&my_t; 
+
+        distance = get_distance_from_ray_and_t (ray, (fcylinder->cylinder).eje, (fcylinder->cylinder).Q, my_t.t) ;
+        if (distance > fcylinder->l1 && distance < fcylinder->l2) {t = &my_t;} 
+        else {t= NULL;}
+
+    } 
+    //2 intersection
+    else if (D > 0) {
+        t1 = (-B - (sqrtl(D))) / (2*A);
+        t2 = (-B + (sqrtl(D))) / (2*A);
+
+        //Order ts = t1 < t2
+        if (t2 < t1) {t3 = t2; t2 = t1; t1 = t3;}
+
+        //cylinder front eye
+        if (t1 > 0){
+
+            distance = get_distance_from_ray_and_t (ray, (fcylinder->cylinder).eje, (fcylinder->cylinder).Q, t1) ;
+            if (distance > fcylinder->l1 && distance < fcylinder->l2) {my_t.t = t1; t = &my_t;} 
+            else {
+                distance = get_distance_from_ray_and_t (ray, (fcylinder->cylinder).eje, (fcylinder->cylinder).Q, t2) ;
+                if (distance > fcylinder->l1 && distance < fcylinder->l2) {my_t.t = t2; t = &my_t;}
+                else {t= NULL;}
+            }
+
+        }
+        //cylinder behind eye
+        else if (t2 < 0) {
+            return t;
+            //no nothing
+        }
+        //eye inside cylinder
+        else if (t1 < 0 && t2 > 0) {
+            distance = get_distance_from_ray_and_t (ray, (fcylinder->cylinder).eje, (fcylinder->cylinder).Q, t2) ;
+            if (distance > fcylinder->l1 && distance < fcylinder->l2) {my_t.t = t2; t = &my_t;}
+            else {t= NULL;}
+
+        }
+    } 
+
     return t;
 
 }
@@ -570,30 +729,30 @@ typedef struct shape{
     SHAPE_U shape;
 }SHAPE, *SHAPE_PTR;
 
-void printShape(SHAPE_PTR s){
-    switch(s->id){
-        case SPHERE_ID:
-            printf("[shape] RGB: %Lf, %Lf, %Lf\tKd: %Lf\tc1: %Lf\tc2: %Lf\tc3: %Lf\n",
-                (s->color.r), (s->color.g), (s->color.b), s->Kd, s->c1, s->c2, s->c3);
-            printf("\t[sphere] center = (%Lf, %Lf, %Lf)\tradius = %Lf\t\n", (s->shape).sphere.center.x, 
-                (s->shape).sphere.center.y,(s->shape).sphere.center.z, (s->shape).sphere.radius);
-            break;
-        case CONE_ID:
-            printf("[shape] RGB: %Lf, %Lf, %Lf\tKd: %Lf\tc1: %Lf\tc2: %Lf\tc3: %Lf\n",
-                (s->color.r), (s->color.g), (s->color.b), s->Kd, s->c1, s->c2, s->c3);
-            printf("\t[cone] center = (%Lf, %Lf, %Lf)\tradius = %Lf\theight = %Lf\n", (s->shape).cone.center.x, 
-                (s->shape).cone.center.y,(s->shape).cone.center.z, (s->shape).cone.radius, (s->shape).cone.height);
-            break;
-        case PLANE_ID:
-            planePrint(&(s->shape).plane);
-            break;
-        case POLYGON_ID:
-            printPolygon(&(s->shape).polygon);
-            break;
-        default:
-            printf("Not a valid figure");
-    }
-}
+// void printShape(SHAPE_PTR s){
+//     switch(s->id){
+//         case SPHERE_ID:
+//             printf("[shape] RGB: %Lf, %Lf, %Lf\tKd: %Lf\tc1: %Lf\tc2: %Lf\tc3: %Lf\n",
+//                 (s->color.r), (s->color.g), (s->color.b), s->Kd, s->c1, s->c2, s->c3);
+//             printf("\t[sphere] center = (%Lf, %Lf, %Lf)\tradius = %Lf\t\n", (s->shape).sphere.center.x, 
+//                 (s->shape).sphere.center.y,(s->shape).sphere.center.z, (s->shape).sphere.radius);
+//             break;
+//         case CONE_ID:
+//             printf("[shape] RGB: %Lf, %Lf, %Lf\tKd: %Lf\tc1: %Lf\tc2: %Lf\tc3: %Lf\n",
+//                 (s->color.r), (s->color.g), (s->color.b), s->Kd, s->c1, s->c2, s->c3);
+//             printf("\t[cone] center = (%Lf, %Lf, %Lf)\tradius = %Lf\theight = %Lf\n", (s->shape).cone.center.x, 
+//                 (s->shape).cone.center.y,(s->shape).cone.center.z, (s->shape).cone.radius, (s->shape).cone.height);
+//             break;
+//         case PLANE_ID:
+//             planePrint(&(s->shape).plane);
+//             break;
+//         case POLYGON_ID:
+//             printPolygon(&(s->shape).polygon);
+//             break;
+//         default:
+//             printf("Not a valid figure");
+//     }
+// }
 
 bool quadratic(void *data){
     ((SHAPE_PTR)data)->c1 = 0.0;
