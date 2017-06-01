@@ -6,7 +6,7 @@
 #include <stdarg.h>
 #include "point.h"
 
-enum shape_id {SPHERE_ID, CONE_ID,  PLANE_ID, POLYGON_ID, CYLINDER_ID, DISC_ID, FCYLINDER_ID};
+enum shape_id {SPHERE_ID, CONE_ID, FCONE_ID, PLANE_ID, POLYGON_ID, CYLINDER_ID, DISC_ID, FCYLINDER_ID};
 
 // SPHERE //////////////////////////////////////////////////
 typedef struct sphere{
@@ -178,27 +178,145 @@ MAGNITUD_PTR get_cone_intersection (RAY_PTR ray, CONE_PTR cone) {
 
 }
 
-// //Get Normal on cylinder
-// VECTOR get_normal_cylinder(CYLINDER_PTR cylinder, POINT surface) {
-//     long double Xq, Yq, Zq, Xo, Yo, Zo, Ldistance, d;
-//     Xo = (cylinder->eje).x; Yo = (cylinder->eje).y; Zo = (cylinder->eje).z;
-//     Xq = (cylinder->Q).x; Yq = (cylinder->Q).y; Zq = (cylinder->Q).z;
+//Get Normal on cone
+VECTOR get_normal_cone(CONE_PTR cone, POINT surface) {
+    long double Xq, Yq, Zq, Xo, Yo, Zo, Ldistance, d;
+    Xo = (cone->eje).x; Yo = (cone->eje).y; Zo = (cone->eje).z;
+    Xq = (cone->Q).x; Yq = (cone->Q).y; Zq = (cone->Q).z;
 
-//     VECTOR L = getNormVectorFromPoints(cylinder->eje,surface);
-//     Ldistance = getDistance(cylinder->eje,surface);
+    VECTOR L = getNormVectorFromPoints(cone->eje,surface);
+    Ldistance = getDistance(cone->eje,surface);
 
-//     d = (vectorDotProduct(&(cylinder->Q),&L)*Ldistance);
+    d = (Ldistance/(vectorDotProduct(&L,&(cone->Q))));
 
-//     POINT m;
-//     m.x = Xo + (d*Xq);
-//     m.y = Yo + (d*Yq);
-//     m.z = Zo + (d*Zq);
+    POINT m;
+    m.x = Xo + (d*Xq);
+    m.y = Yo + (d*Yq);
+    m.z = Zo + (d*Zq);
 
-//     VECTOR vector = getNormVectorFromPoints(m,surface);
-//     return vector;
-// }
+    VECTOR vector = getNormVectorFromPoints(m,surface);
+    return vector;
+}
 
 // END CONE ////////////////////////////////////////////////
+
+
+// FINITE CONE /////////////////////////////////////////////////////
+typedef struct fcone{
+    CONE cone;
+    long double l1;
+    long double l2;
+} FCONE, *FCONE_PTR;
+
+// create a cone
+FCONE create_fcone(POINT eje, long double d, long double h, VECTOR v, long double l1, long double l2){
+    normalizeVector(&v);
+    CONE new_cone = {d: d, h: h, eje: eje, Q : v};
+    if (l2<l1) {long double l3=l1;l1=l2;l2=l3;}
+    FCONE new_fcone = {cone: new_cone , l1: l1, l2: l2};
+    return new_fcone;
+}
+
+//Get distance from ray  and t
+long double get_distance_from_ray_and_t (RAY_PTR ray, POINT eje, VECTOR Q, long double t) {
+    long double distance, Ldistance;
+    POINT intersection = get_point_from_ray(ray,t);
+    VECTOR L = getNormVectorFromPoints(eje,intersection);
+    Ldistance = getDistance(eje,intersection);
+    distance = (vectorDotProduct(&Q,&L)*Ldistance);
+
+    return distance;
+}
+
+//get intersection
+MAGNITUD_PTR get_fcone_intersection (RAY_PTR ray, FCONE_PTR fcone) {
+    
+    MAGNITUD_PTR t = NULL;
+    MAGNITUD my_t;
+
+    long double F, G, H, M, N, O, J, K, A, B, C, D, R, h, di;
+    long double Xd, Yd, Zd, Xe, Ye, Ze, Xq, Yq, Zq, Xo, Yo, Zo;
+    long double t1,t2,t3;
+    long double distance;
+
+
+    Xd = (ray->vector).x; Yd = (ray->vector).y; Zd = (ray->vector).z;
+    Xe = (ray->point).x; Ye = (ray->point).y; Ze = (ray->point).z;
+    Xq = ((fcone->cone).Q).x; Yq = ((fcone->cone).Q).y; Zq = ((fcone->cone).Q).z;
+    Xo = ((fcone->cone).eje).x; Yo = ((fcone->cone).eje).y; Zo = ((fcone->cone).eje).z;
+    h = (fcone->cone).h;
+    di = (fcone->cone).d;
+
+    //calculate F, G, H, N, M, O
+
+    F = Xd - (Xd*Xq*Xq) - (Yd*Yq*Xq) - (Zd*Zq*Xq);
+    G = Yd - (Xd*Xq*Yq) - (Yd*Yq*Yq) - (Zd*Zq*Yq);
+    H = Zd - (Xd*Xq*Zq) - (Yd*Yq*Zq) - (Zd*Zq*Zq);
+    J = (h / di) * ((Xd*Xq) + (Yd*Yq) + (Zd*Zq));
+
+    M = Xe - Xo - (Xe*Xq*Xq) + (Xo*Xq*Xq) - (Ye*Yq*Xq) + (Yo*Yq*Xq) - (Ze*Zq*Xq) + (Zo*Zq*Xq);
+    N = Ye - Yo - (Xe*Xq*Yq) + (Xo*Xq*Yq) - (Ye*Yq*Yq) + (Yo*Yq*Yq) - (Ze*Zq*Yq) + (Zo*Zq*Yq);
+    O = Ze - Zo - (Xe*Xq*Zq) + (Xo*Xq*Zq) - (Ye*Yq*Zq) + (Yo*Yq*Zq) - (Ze*Zq*Zq) + (Zo*Zq*Zq);
+    K = (h / di) * ((Xe*Xq) - (Xo*Xq) + (Ye*Yq) - (Yo*Yq) + (Ze*Zq) - (Zo*Zq)) ;
+
+    //calculate A , B, C, D
+    A = (F*F)+(G*G)+(H*H)-(J*J);
+    B = 2*((F*M)+(G*N)+(H*O)-(J*K));
+    C = (M*M)+(N*N)+(O*O)-(K*K);
+
+    D = (B*B) - (4*A*C);
+
+
+//Intersection cases
+    //One Intersection
+    if (D == 0){
+        my_t.t = -B/(2*A);
+        t=&my_t; 
+
+        distance = get_distance_from_ray_and_t (ray, (fcone->cone).eje, (fcone->cone).Q, my_t.t) ;
+        if (distance > fcone->l1 && distance < fcone->l2) {t = &my_t;} 
+        else {t= NULL;}
+
+    } 
+    //2 intersection
+    else if (D > 0) {
+        t1 = (-B - (sqrtl(D))) / (2*A);
+        t2 = (-B + (sqrtl(D))) / (2*A);
+
+        //Order ts = t1 < t2
+        if (t2 < t1) {t3 = t2; t2 = t1; t1 = t3;}
+
+        //cylinder front eye
+        if (t1 > 0){
+
+            distance = get_distance_from_ray_and_t (ray, (fcone->cone).eje, (fcone->cone).Q, t1) ;
+            if (distance > fcone->l1 && distance < fcone->l2) {my_t.t = t1; t = &my_t;} 
+            else {
+                distance = get_distance_from_ray_and_t (ray, (fcone->cone).eje, (fcone->cone).Q, t2) ;
+                if (distance > fcone->l1 && distance < fcone->l2) {my_t.t = t2; t = &my_t;}
+                else {t= NULL;}
+            }
+
+        }
+        //cylinder behind eye
+        else if (t2 < 0) {
+            return t;
+            //no nothing
+        }
+        //eye inside cylinder
+        else if (t1 < 0 && t2 > 0) {
+            distance = get_distance_from_ray_and_t (ray, (fcone->cone).eje, (fcone->cone).Q, t2) ;
+            if (distance > fcone->l1 && distance < fcone->l2) {my_t.t = t2; t = &my_t;}
+            else {t= NULL;}
+
+        }
+    } 
+
+    return t;
+
+}
+
+// END FINITE CONE ////////////////////////////////////////////////
 
 // PLANE /////////////////////////////////////////////////////
 typedef struct plane{
@@ -614,17 +732,6 @@ FCYLINDER create_fcylinder(POINT e, long double r, VECTOR v, long double l1, lon
     return new_fcylinder;
 }
 
-//Get distance from ray  and t
-long double get_distance_from_ray_and_t (RAY_PTR ray, POINT eje, VECTOR Q, long double t) {
-    long double distance, Ldistance;
-    POINT intersection = get_point_from_ray(ray,t);
-    VECTOR L = getNormVectorFromPoints(eje,intersection);
-    Ldistance = getDistance(eje,intersection);
-    distance = (vectorDotProduct(&Q,&L)*Ldistance);
-
-    return distance;
-}
-
 //get intersection
 MAGNITUD_PTR get_fcylinder_intersection (RAY_PTR ray, FCYLINDER_PTR fcylinder) {
     
@@ -714,6 +821,7 @@ MAGNITUD_PTR get_fcylinder_intersection (RAY_PTR ray, FCYLINDER_PTR fcylinder) {
 typedef union shape_u{
         SPHERE sphere;
         CONE cone;
+        FCONE fcone;
         PLANE plane;
         POLYGON polygon;
         CYLINDER cylinder;
