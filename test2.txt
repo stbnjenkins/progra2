@@ -17,8 +17,8 @@ ESPECULAR
 vv 1.0
 
 SPHERE
-r 450.0
-center 800.0 450.0 1000.0
+radio 450.0
+centro 800.0 450.0 1000.0
 c1 0.5
 c2 0.0
 c3 0.0
@@ -27,10 +27,11 @@ ks 1.0
 ka 0.5
 kn 10.0
 color 0.0 1.0 0.0
+END
 
 SPHERE
-r 200.0
-center 950.0 200.0 200.0
+radio 200.0
+centro 950.0 200.0 200.0
 c1 0.5
 c2 0.0
 c3 0.0
@@ -39,10 +40,11 @@ ks 1.0
 ka 0.1
 kn 10.0
 color 0.0 0.0 1.0
+END
 
 CYLINDER
-r 75.0
-center 500.0 200.0 200.0
+radio 75.0
+centro 500.0 200.0 200.0
 vector -0.2 1.0 0.0
 c1 0.5
 c2 0.0
@@ -52,11 +54,12 @@ ks 1.0
 ka 0.1
 kn 10.0
 color 0.0 0.0 1.0
+END
 
 FCYLINDER
-r 75.0
+radio 75.0
 l 400.0
-center 500.0 200.0 200.0
+centro 500.0 200.0 200.0
 vector 1.0 1.0 0.0
 c1 0.5
 c2 0.0
@@ -66,10 +69,11 @@ ks 1.0
 ka 0.1
 kn 10.0
 color 0.0 0.0 1.0
+END
 
 SPHERE
-r 450.0
-center 100.0 450.0 2000.0
+radio 450.0
+centro 100.0 450.0 2000.0
 c1 0.5
 c2 0.0
 c3 0.0
@@ -78,10 +82,11 @@ ks 1.0
 ka 0.9
 kn 10.0
 color 1.0 0.0 0.0
+END
 
 SPHERE
-r 250.0
-center 160.0 250.0 400.0
+radio 250.0
+centro 160.0 250.0 400.0
 c1 0.5
 c2 0.0
 c3 0.0
@@ -90,6 +95,7 @@ ks 1.0
 ka 0.7
 kn 10.0
 color 1.0 1.0 0.0
+END
 
 PLANE
 coef 0.0 1.0 0.0 0.0
@@ -101,9 +107,10 @@ ks 1.0
 ka 1.0
 kn 10.0
 color 0.5 0.5 0.5
+END
 
 POLYGON
-vertex 4
+v_number 4
 p 200.0 200.0 0.0
 p 200.0 200.0 800.0
 p 900.0 200.0 800.0
@@ -116,9 +123,10 @@ ks 1.0
 ka 1.0
 kn 10.0
 color 0.8 0.8 0.8
+END
 
 POLYGON
-vertex 4
+v_number 4
 p -500.0 500.0 2000.0
 p -500.0 1000.0 2000.0
 p 0.0 1000.0 2000.0
@@ -131,9 +139,10 @@ ks 1.0
 ka 1.0
 kn 10.0
 color 0.76 0.60 0.42
+END
 
 POLYGON
-vertex 4
+v_number 4
 p -480.0 520.0 1980.0
 p -480.0 980.0 1980.0
 p -20.0 980.0 1980.0
@@ -146,9 +155,10 @@ ks 1.0
 ka 1.0
 kn 10.0
 color 0.45 0.29 0.05
+END
 
 POLYGON
-vertex 10
+v_number 10
 p -430.0 740.0 1970.0
 p -400.0 820.0 1970.0
 p -440.0 860.0 1970.0
@@ -167,10 +177,11 @@ ks 1.0
 ka 1.0
 kn 10.0
 color 0.7 0.7 0.7
+END
 
 MYDISC
-r 80.0
-center 400.0 820.0 1000.0
+radio 80.0
+centro 400.0 820.0 1000.0
 vect 0.0 0.0 -1.0
 c1 0.5
 c2 0.0
@@ -180,3 +191,4 @@ ks 1.0
 ka 0.5
 kn 10.0
 color 0.0 0.0 0.0
+END
