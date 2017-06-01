@@ -11,20 +11,11 @@ void ray_tracer (POINT_PTR eye, int resx, int resy, PointNodePtr Light_list){
      for (i = 0; i < resx; i++) {
        for (j = 0; j < resy; j++) {
 
-//First Intersection
+            //de que color
             ray = find_ray (eye, i, j);
-            ptr = first_intersection(&shapeList);
+            color = get_color2(reflection_levels);
+            plot(resx, resy, i, j, color.r, color.g, color.b);
 
-//De que color
-
-            if (ptr != NULL) { 
-                intersection = get_point_from_ray (&ray, tmin);
-                
-                color = get_color(ptr, intersection, Light_list);
- 
-                plot(resx, resy, i, j, color.r, color.g, color.b);
- 
-            }
        }
      }
 }

@@ -10,6 +10,7 @@ SHAPE_PTR ptr = NULL;
 RAY ray;
 long double tmin;
 PointNodePtr Light_list = NULL;
+COLOR bg_color = (COLOR) {r: 0.57255, g: 0.9098, b: 1.0};
 
 // Global parameters (overwritten by read values from file)
 long double Ia;
@@ -19,7 +20,7 @@ int resy;
 int Enable_intensity;
 int Enable_Shadow;
 int Enable_Especular;
-short int max_mirror = 3;
+short int reflection_levels = 3;
 
 
 

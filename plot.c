@@ -1,12 +1,9 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <GL/glut.h>
-
-#include "color.h"
 
 COLOR **buffer;
 
@@ -50,9 +47,9 @@ void ini_buffer(int resx, int resy) {
     //initialize the values R G B for every pixel 
     for (i = 0; i < resx; i++) {
         for (j = 0; j < resy; j++) {
-            buffer[i][j].r = 0.57255;
-            buffer[i][j].g = 0.9098;
-            buffer[i][j].b = 1;
+            buffer[i][j].r = bg_color.r;
+            buffer[i][j].g = bg_color.g;
+            buffer[i][j].b = bg_color.b;
         }
     }
 }

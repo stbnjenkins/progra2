@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-
+#include "color.h"
 #include "point.h"
-#include "plot.c"
 #include "list.c"
 #include "pointNode.c"
 #include "vectors.c"
@@ -11,10 +10,10 @@
 #include "general.h"
 #include "first_intersection.c"
 #include "getColor.c"
-#include "ray_tracer.c"
 #include "parser.c"
+#include "plot.c"
+#include "ray_tracer.c"
 #include "frame_manager.c"
-
 #include "keyboard_input.c"
 
 //Run the window
