@@ -28,6 +28,8 @@ ks 1.0
 ka 0.1
 kn 10.0
 color 0.0 0.0 1.0
+o1 0.5
+o2 0.5
 END
 
 FCYLINDER
@@ -44,6 +46,8 @@ ks 1.0
 ka 0.1
 kn 10.0
 color 1.0 0.0 0.0
+o1 0.5
+o2 0.5
 END
 
 CONE
@@ -59,4 +63,6 @@ ks 1.0
 ka 0.1
 kn 10.0
 color 0.0 1.0 0.0
+o1 0.5
+o2 0.5
 END

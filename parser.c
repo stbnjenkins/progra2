@@ -7,7 +7,7 @@ void parseFile(){
     char str1[20];
     long double n1,n2,n3,n4;
     COLOR color;
-    long double kd, ks, ka, kn, c1, c2, c3;
+    long double kd, ks, ka, kn, c1, c2, c3, o1,o2;
     POINT center, p;
     long double r,l1, l2;
     long double a,b,c,d,h;
@@ -90,6 +90,18 @@ void parseFile(){
                     continue; 
                 }
 
+                if(strcmp("o1", str1) == 0){
+                    // o1
+                    o1 = n1;
+                    continue; 
+                }
+
+                if(strcmp("o2", str1) == 0){
+                    // o2
+                    o2 = n1;
+                    continue; 
+                }
+
                 if(strcmp("kd", str1) == 0){
                     // kd
                     kd = n1;      
@@ -124,7 +136,7 @@ void parseFile(){
 
                 if(strcmp("END", str1) == 0){
                     SPHERE s1 = create_sphere(center, r);
-                    SHAPE x1 = {SPHERE_ID, color, kd,ks,ka,kn,c1,c2,c3, (SHAPE_U)s1};
+                    SHAPE x1 = {SPHERE_ID, color, kd,ks,ka,kn,c1,c2,c3,o1,o2, (SHAPE_U)s1};
                     // printShape(&x1);
                     list_append(&shapeList, &x1);
                     break;
@@ -173,6 +185,17 @@ void parseFile(){
                     c3 = n1;
                     continue; 
                 }
+                if(strcmp("o1", str1) == 0){
+                    // o1
+                    o1 = n1;
+                    continue; 
+                }
+
+                if(strcmp("o2", str1) == 0){
+                    // o2
+                    o2 = n1;
+                    continue; 
+                }
 
                 if(strcmp("kd", str1) == 0){
                     // kd
@@ -209,7 +232,7 @@ void parseFile(){
                 if(strcmp("END", str1) == 0){
                     normalizeVector(&myvector);
                     DISC d1 = create_disc(center, r, myvector);
-                    SHAPE x1 = {DISC_ID, color, kd,ks,ka,kn,c1,c2,c3, (SHAPE_U)d1};
+                    SHAPE x1 = {DISC_ID, color, kd,ks,ka,kn,c1,c2,c3,o1,o2, (SHAPE_U)d1};
                     // printShape(&x1);
                     list_append(&shapeList, &x1);
                     break;
@@ -267,6 +290,17 @@ void parseFile(){
                     c3 = n1;
                     continue; 
                 }
+                if(strcmp("o1", str1) == 0){
+                    // o1
+                    o1 = n1;
+                    continue; 
+                }
+
+                if(strcmp("o2", str1) == 0){
+                    // o2
+                    o2 = n1;
+                    continue; 
+                }
 
                 if(strcmp("kd", str1) == 0){
                     // kd
@@ -303,7 +337,7 @@ void parseFile(){
                 if(strcmp("END", str1) == 0){
                     normalizeVector(&myvector);
                     CONE con = create_cone(center, d, h, myvector);
-                    SHAPE x1 = {CONE_ID, color, kd,ks,ka,kn,c1,c2,c3, (SHAPE_U)con};
+                    SHAPE x1 = {CONE_ID, color, kd,ks,ka,kn,c1,c2,c3,o1,o2, (SHAPE_U)con};
                     // printShape(&x1);
                     list_append(&shapeList, &x1);
                     break;
@@ -372,6 +406,17 @@ void parseFile(){
                     c3 = n1;
                     continue; 
                 }
+                if(strcmp("o1", str1) == 0){
+                    // o1
+                    o1 = n1;
+                    continue; 
+                }
+
+                if(strcmp("o2", str1) == 0){
+                    // o2
+                    o2 = n1;
+                    continue; 
+                }
 
                 if(strcmp("kd", str1) == 0){
                     // kd
@@ -408,7 +453,7 @@ void parseFile(){
                 if(strcmp("END", str1) == 0){
                     normalizeVector(&myvector);
                     FCONE fcon = create_fcone(center, d, h, myvector, l1, l2);
-                    SHAPE x1 = {FCONE_ID, color, kd,ks,ka,kn,c1,c2,c3, (SHAPE_U)fcon};
+                    SHAPE x1 = {FCONE_ID, color, kd,ks,ka,kn,c1,c2,c3,o1,o2, (SHAPE_U)fcon};
                     // printShape(&x1);
                     list_append(&shapeList, &x1);
                     break;
@@ -457,6 +502,17 @@ void parseFile(){
                     c3 = n1;
                     continue; 
                 }
+                if(strcmp("o1", str1) == 0){
+                    // o1
+                    o1 = n1;
+                    continue; 
+                }
+
+                if(strcmp("o2", str1) == 0){
+                    // o2
+                    o2 = n1;
+                    continue; 
+                }
 
                 if(strcmp("kd", str1) == 0){
                     // kd
@@ -493,7 +549,7 @@ void parseFile(){
                 if(strcmp("END", str1) == 0){
                     normalizeVector(&myvector);
                     CYLINDER cil = create_cylinder(center, r, myvector);
-                    SHAPE x1 = {CYLINDER_ID, color, kd,ks,ka,kn,c1,c2,c3, (SHAPE_U)cil};
+                    SHAPE x1 = {CYLINDER_ID, color, kd,ks,ka,kn,c1,c2,c3,o1,o2, (SHAPE_U)cil};
                     // printShape(&x1);
                     list_append(&shapeList, &x1);
                     break;
@@ -551,6 +607,17 @@ void parseFile(){
                     c3 = n1;
                     continue; 
                 }
+                if(strcmp("o1", str1) == 0){
+                    // o1
+                    o1 = n1;
+                    continue; 
+                }
+
+                if(strcmp("o2", str1) == 0){
+                    // o2
+                    o2 = n1;
+                    continue; 
+                }
 
                 if(strcmp("kd", str1) == 0){
                     // kd
@@ -587,7 +654,7 @@ void parseFile(){
                 if(strcmp("END", str1) == 0){
                     normalizeVector(&myvector);
                     FCYLINDER cil = create_fcylinder(center, r, myvector, l1, l2);
-                    SHAPE x1 = {FCYLINDER_ID, color, kd,ks,ka,kn,c1,c2,c3, (SHAPE_U)cil};
+                    SHAPE x1 = {FCYLINDER_ID, color, kd,ks,ka,kn,c1,c2,c3,o1,o2, (SHAPE_U)cil};
                     list_append(&shapeList, &x1);
                     break;
                 }
@@ -621,6 +688,17 @@ void parseFile(){
                 if(strcmp("c3", str1) == 0){
                     // c3
                     c3 = n1;
+                    continue; 
+                }
+                if(strcmp("o1", str1) == 0){
+                    // o1
+                    o1 = n1;
+                    continue; 
+                }
+
+                if(strcmp("o2", str1) == 0){
+                    // o2
+                    o2 = n1;
                     continue; 
                 }
 
@@ -658,7 +736,7 @@ void parseFile(){
 
                 if(strcmp("END", str1) == 0){
                     PLANE p1 = create_plane(a, b, c, d);
-                    SHAPE x1 = {PLANE_ID, color, kd,ks,ka,kn,c1,c2,c3, (SHAPE_U)p1};
+                    SHAPE x1 = {PLANE_ID, color, kd,ks,ka,kn,c1,c2,c3,o1,o2, (SHAPE_U)p1};
                     // printShape(&x1);
                     list_append(&shapeList, &x1);
                     break;
@@ -701,6 +779,17 @@ void parseFile(){
                     c3 = n1;
                     continue; 
                 }
+                if(strcmp("o1", str1) == 0){
+                    // o1
+                    o1 = n1;
+                    continue; 
+                }
+
+                if(strcmp("o2", str1) == 0){
+                    // o2
+                    o2 = n1;
+                    continue; 
+                }
 
                 if(strcmp("kd", str1) == 0){
                     // kd
@@ -736,7 +825,7 @@ void parseFile(){
 
                 if(strcmp("END", str1) == 0){
                     put_plane_on_polygon(&poly);
-                    SHAPE x1 = {POLYGON_ID, color, kd,ks,ka,kn,c1,c2,c3, (SHAPE_U)poly};
+                    SHAPE x1 = {POLYGON_ID, color, kd,ks,ka,kn,c1,c2,c3,o1,o2, (SHAPE_U)poly};
                     // printShape(&x1);
                     list_append(&shapeList, &x1);
                     break;

@@ -19,6 +19,7 @@ int resy;
 int Enable_intensity;
 int Enable_Shadow;
 int Enable_Especular;
+short int max_mirror = 3;
 
 
 
