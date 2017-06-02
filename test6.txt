@@ -1,0 +1,62 @@
+EYE
+xyz 550.0 400.0 -1500
+
+IA
+ia 0.5
+
+RESOLUTION
+xyz 1110 700
+
+INTENSITY
+vv 1.0
+
+SHADOW
+vv 1.0
+
+ESPECULAR
+vv 1.0
+
+SPHERE
+radio 350.0
+centro 800.0 250.0 400.0
+c1 0.5
+c2 0.0
+c3 0.0
+o1 0.0
+o2 1.0
+kd 1.0
+ks 1.0
+ka 0.9
+kn 10.0
+color 1.0 0.0 0.0
+END
+
+SPHERE
+radio 250.0
+centro 160.0 250.0 400.0
+c1 0.5
+c2 0.0
+c3 0.0
+o1 0.9
+o2 0.1
+kd 1.0
+ks 1.0
+ka 0.7
+kn 10.0
+color 1.0 1.0 0.0
+END
+
+PLANE
+coef 0.0 1.0 0.0 0.0
+c1 0.5
+c2 0.0
+c3 0.0
+o1 1.0
+o2 0.0
+kd 1.0
+ks 1.0
+ka 1.0
+kn 10.0
+color 0.5 0.5 0.5
+END
+

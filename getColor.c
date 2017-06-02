@@ -1,5 +1,7 @@
 #include <math.h>
 
+COLOR get_color2(short int levels);
+
 //// PARTIAL CALCULUS /////////////////////////////////////////////////////////
 //Get Partial Especular
 long double get_partial_especular(long double product, long double Distance, long double Ks, long double Ip, long double c1, long double c2, long double c3){
@@ -30,9 +32,9 @@ long double get_partial_intensity(long double product, long double Distance, lon
 //Get Color for any shape
 COLOR get_shape_color (VECTOR N, COLOR color, POINT intersection, PointNodePtr Light_list, long double Kd, long double Ks, long double c1,long double c2, long double c3, long double Ka, long double Kn, long double o1,long double o2, short int levels) {
     PointNodePtr my_ptr;
-    VECTOR L,V,R;
+    VECTOR L,V,R, N_prima;
     COLOR final_color, color_reflejo;
-    long double Distance, productLN, productVR, I, E, Ip, Final_I, Final_E;
+    long double Distance, productVN, productLN, productVR, I, E, Ip, Final_I, Final_E, dd;
 
     Final_I = 0;
     Final_E = 0;
@@ -86,89 +88,25 @@ COLOR get_shape_color (VECTOR N, COLOR color, POINT intersection, PointNodePtr L
         final_color.b = final_color.b + (Final_E * (1.0 - final_color.b));
     }
 
-    // if(levels && o2 > 0){
-            //find vectors
-    //     color_reflejo = 
-    // }
-    // final_color = o1 * final_color + o2 * color_reflejado;
+    if(levels && o2 > 0){
+        //find vectors
+        // R = 2N(VN)-V
+        dd = vectorDotProduct(&N, &V);
+        N_prima = vectorScale (&N, dd);
+        R = vectorScale (&N_prima, 2);
+        R = vectorDiff(&R, &V);
+        normalizeVector(&R);
+        ray.point = intersection;
+        ray.vector = R;
+        color_reflejo = get_color2(levels-1);
+        final_color.r = o1 * final_color.r + o2 * color_reflejo.r;
+        final_color.g = o1 * final_color.g + o2 * color_reflejo.g;
+        final_color.b = o1 * final_color.b + o2 * color_reflejo.b;
+    }
+
     return final_color;
 
 }
-
-
-//// GET COLOR ////////////////////////////////////////////////////////////
-//Get Color
-// COLOR get_color(SHAPE_PTR shape, POINT intersection, PointNodePtr Light_list){
-//     int id = shape->id;
-//     long double Kd, Ks, Ka, Kn, Ip, c1, c2, c3, o1,o2, dotprod;
-//     VECTOR N,D;
-//     COLOR final_color, base_color;
-    
-//     base_color = shape->color;
-//     Kd = shape->Kd;
-//     Ks = shape->Ks;
-//     Ka = shape->Ka;
-//     Kn = shape->Kn;
-//     c1 = shape->c1;
-//     c2 = shape->c2;
-//     c3 = shape->c3;
-//     o1 = shape->o1;
-//     o2 = shape->o2;
-
-// //Color for spheres
-//     if (id == SPHERE_ID){
-//         SPHERE s = (shape->shape).sphere;
-//         N = get_normal_sphere(&s, intersection);
-//         final_color = get_shape_color (N, base_color,intersection, Light_list, Kd, Ks, c1, c2, c3, Ka, Kn, o1, o2);
-//     } 
-//     else if (id == CONE_ID){
-//         CONE c = (shape->shape).cone;
-//         N = get_normal_cone(&c,intersection);
-//         final_color = get_shape_color (N, base_color,intersection, Light_list, Kd, Ks, c1, c2, c3, Ka, Kn, o1, o2);
-//     }
-//     else if (id == FCONE_ID){
-//         CONE c = ((shape->shape).fcone).cone;
-//         N = get_normal_cone(&c,intersection);
-//         final_color = get_shape_color (N, base_color,intersection, Light_list, Kd, Ks, c1, c2, c3, Ka, Kn, o1, o2);
-//     }
-//     else if (id == PLANE_ID){
-//         PLANE p = (shape->shape).plane;
-//         N = get_normal_plane(&p);
-//         D = getNormVectorFromPoints (eye,intersection);
-//         dotprod = vectorDotProduct (&N,&D);
-//         if (dotprod > 0 ) {N=vectorScale(&N,-1);}
-//         final_color = get_shape_color (N, base_color,intersection, Light_list, Kd, Ks, c1, c2, c3, Ka, Kn, o1, o2);
-//     }
-//     else if (id == POLYGON_ID){
-//         PLANE p = ((shape->shape).polygon).plane;
-//         N = get_normal_plane(&p);
-//         D = getNormVectorFromPoints (eye,intersection);
-//         dotprod = vectorDotProduct (&N,&D);
-//         if (dotprod > 0 ) {N=vectorScale(&N,-1);}
-//         final_color = get_shape_color (N, base_color,intersection, Light_list, Kd, Ks, c1, c2, c3, Ka, Kn, o1, o2);
-//     }
-//     else if (id == CYLINDER_ID){
-//         CYLINDER c = (shape->shape).cylinder;
-//         N = get_normal_cylinder(&c,intersection);
-//         final_color = get_shape_color (N, base_color,intersection, Light_list, Kd, Ks, c1, c2, c3, Ka, Kn, o1, o2);
-//     }
-//     else if (id == DISC_ID){
-//         PLANE p = ((shape->shape).disc).plane;
-//         N = get_normal_plane(&p);
-//         D = getNormVectorFromPoints (eye,intersection);
-//         dotprod = vectorDotProduct (&N,&D);
-//         if (dotprod > 0 ) {N=vectorScale(&N,-1);}
-//         final_color = get_shape_color (N, base_color,intersection, Light_list, Kd, Ks, c1, c2, c3, Ka, Kn, o1, o2);
-//     }
-//     else if (id == FCYLINDER_ID){
-//         CYLINDER c = ((shape->shape).fcylinder).cylinder;
-//         N = get_normal_cylinder(&c,intersection);
-//         final_color = get_shape_color (N, base_color,intersection, Light_list, Kd, Ks, c1, c2, c3, Ka, Kn, o1, o2);
-//     }
-//     return final_color;
-
-// }
-
 
 
 //Get Color
