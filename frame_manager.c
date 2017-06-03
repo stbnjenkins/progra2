@@ -39,12 +39,12 @@
 
 //Initialize Lights
 void create_list_of_lights() {
-    // POINT light1; light1.x = 2000.0; light1.y = 2000.0; light1.z = -1000.0; 
-    // Light_list = insert_node_last(light1, 0.2, Light_list);
-    POINT light2; light2.x = 1000.0; light2.y = 2000.0; light2.z = -500.0; 
-    Light_list = insert_node_last(light2, 0.8, Light_list);
+    POINT light1; light1.x = 1100.0; light1.y = 2000.0; light1.z = -500.0; 
+    Light_list = insert_node_last(light1, 0.5, Light_list);
+    POINT light2; light2.x = 0.0; light2.y = 2000.0; light2.z = -500.0; 
+    Light_list = insert_node_last(light2, 0.5, Light_list);
     // POINT light3; light3.x = 550.0; light3.y = 2000.0; light3.z = 500.0; 
-    // Light_list = insert_node_last(light3, 0.6, Light_list);
+    // Light_list = insert_node_last(light3, 0.4, Light_list);
 }
 
 //Run plotter

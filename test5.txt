@@ -1,5 +1,5 @@
 EYE
-xyz 550.0 200.0 -150
+xyz 550.0 350.0 -2000
 
 IA
 ia 0.5
@@ -16,14 +16,152 @@ vv 1.0
 ESPECULAR
 vv 1.0
 
+##BASE DE LA BALANZA
 FCONE
 d 400.0
-h 100.0
-l1 -400.0
+h 150.0
+l1 -600.0
 l2 0
-centro 550.0 250.0 250.0
+centro 550.0 250.0 500.0
 vector 0.0 1.0 0.0
 c1 0.8
+c2 0.0
+c3 0.0
+o1 0.8
+o2 0.2
+kd 1.0
+ks 1.0
+ka 0.5
+kn 10.0
+color 0.828125 0.68359375 0.21484375
+END
+
+SPHERE
+radio 25.0
+centro 550.0 550.0 500.0
+c1 0.8
+c2 0.0
+c3 0.0
+o1 0.8
+o2 0.2
+kd 1.0
+ks 1.0
+ka 0.5
+kn 10.0
+color 0.828125 0.68359375 0.21484375
+END
+
+FCYLINDER
+radio 15.0
+l1 -200.0
+l2 300.0
+centro 550.0 250.0 500.0
+vector 0.0 1.0 0.0
+c1 0.8
+c2 0.0
+c3 0.0
+o1 0.8
+o2 0.2
+kd 1.0
+ks 1.0
+ka 0.5
+kn 10.0
+color 0.828125 0.68359375 0.21484375
+END
+
+##BRAZO DE LA BALANZA
+SPHERE
+radio 25.0
+centro 250.0 550.0 500.0
+c1 0.8
+c2 0.0
+c3 0.0
+o1 0.8
+o2 0.2
+kd 1.0
+ks 1.0
+ka 0.5
+kn 10.0
+color 0.828125 0.68359375 0.21484375
+END
+
+SPHERE
+radio 25.0
+centro 850.0 550.0 500.0
+c1 0.8
+c2 0.0
+c3 0.0
+o1 0.8
+o2 0.2
+kd 1.0
+ks 1.0
+ka 0.5
+kn 10.0
+color 0.828125 0.68359375 0.21484375
+END
+
+FCYLINDER
+radio 10.0
+l1 300.0
+l2 -300.0
+centro 550.0 550.0 500.0
+vector 1.0 0.0 0.0
+c1 0.8
+c2 0.0
+c3 0.0
+o1 0.8
+o2 0.2
+kd 1.0
+ks 1.0
+ka 0.5
+kn 10.0
+color 0.828125 0.68359375 0.21484375
+END
+
+##CADENAS DE LA BALANZA
+FCYLINDER
+radio 5.0
+l1 250.0
+l2 0.0
+centro 850.0 550.0 500.0
+vector 0.0 -1.0 -0.25
+c1 0.5
+c2 0.0
+c3 0.0
+o1 0.8
+o2 0.2
+kd 1.0
+ks 1.0
+ka 0.5
+kn 10.0
+color 0.828125 0.68359375 0.21484375
+END
+
+FCYLINDER
+radio 5.0
+l1 250.0
+l2 0.0
+centro 850.0 550.0 500.0
+vector 0.25 -1.0 0.0
+c1 0.5
+c2 0.0
+c3 0.0
+o1 0.8
+o2 0.2
+kd 1.0
+ks 1.0
+ka 0.5
+kn 10.0
+color 0.828125 0.68359375 0.21484375
+END
+
+FCYLINDER
+radio 5.0
+l1 250.0
+l2 0.0
+centro 850.0 550.0 500.0
+vector -0.25 -1.0 0.0
+c1 0.5
 c2 0.0
 c3 0.0
 o1 0.8
@@ -37,27 +175,9 @@ END
 
 FCYLINDER
 radio 5.0
-l1 300.0
-l2 -300.0
-centro 550.0 245.0 250.0
-vector 1.0 0.0 0.0
-c1 0.5
-c2 0.0
-c3 0.0
-o1 0.8
-o2 0.2
-kd 1.0
-ks 1.0
-ka 0.1
-kn 10.0
-color 0.828125 0.68359375 0.21484375
-END
-
-FCYLINDER
-radio 2.0
-l1 150.0
+l1 250.0
 l2 0.0
-centro 850.0 245.0 250.0
+centro 250.0 550.0 500.0
 vector 0.0 -1.0 -0.25
 c1 0.5
 c2 0.0
@@ -66,16 +186,16 @@ o1 0.8
 o2 0.2
 kd 1.0
 ks 1.0
-ka 0.1
+ka 0.5
 kn 10.0
 color 0.828125 0.68359375 0.21484375
 END
 
 FCYLINDER
-radio 2.0
-l1 150.0
+radio 5.0
+l1 250.0
 l2 0.0
-centro 850.0 245.0 250.0
+centro 250.0 550.0 500.0
 vector 0.25 -1.0 0.0
 c1 0.5
 c2 0.0
@@ -84,16 +204,16 @@ o1 0.8
 o2 0.2
 kd 1.0
 ks 1.0
-ka 0.1
+ka 0.5
 kn 10.0
 color 0.828125 0.68359375 0.21484375
 END
 
 FCYLINDER
-radio 2.0
-l1 150.0
+radio 5.0
+l1 250.0
 l2 0.0
-centro 850.0 245.0 250.0
+centro 250.0 550.0 500.0
 vector -0.25 -1.0 0.0
 c1 0.5
 c2 0.0
@@ -102,65 +222,82 @@ o1 0.8
 o2 0.2
 kd 1.0
 ks 1.0
-ka 0.1
+ka 0.5
 kn 10.0
-color 1.0 1.0 0.0
+color 0.828125 0.68359375 0.21484375
 END
 
-FCYLINDER
-radio 2.0
-l1 150.0
-l2 0.0
-centro 250.0 245.0 250.0
-vector 0.0 -1.0 -0.25
-c1 0.5
+//PLATOS de la Balanza
+FCONE
+d 300.0
+h 500.0
+l1 40.0
+l2 0
+centro 250.0 270.0 500.0
+vector 0.0 1.0 0.0
+c1 0.8
 c2 0.0
 c3 0.0
 o1 0.8
 o2 0.2
 kd 1.0
 ks 1.0
-ka 0.1
+ka 0.5
 kn 10.0
 color 0.828125 0.68359375 0.21484375
 END
 
-FCYLINDER
-radio 2.0
-l1 150.0
-l2 0.0
-centro 250.0 245.0 250.0
-vector 0.25 -1.0 0.0
-c1 0.5
+FCONE
+d 300.0
+h 500.0
+l1 40.0
+l2 0
+centro 850.0 270.0 500.0
+vector 0.0 1.0 0.0
+c1 0.8
 c2 0.0
 c3 0.0
 o1 0.8
 o2 0.2
 kd 1.0
 ks 1.0
-ka 0.1
+ka 0.5
 kn 10.0
 color 0.828125 0.68359375 0.21484375
 END
 
-FCYLINDER
-radio 2.0
-l1 150.0
-l2 0.0
-centro 250.0 245.0 250.0
-vector -0.25 -1.0 0.0
-c1 0.5
+SPHERE
+radio 40.0
+centro 250.0 317.0 500.0
+c1 0.8
 c2 0.0
 c3 0.0
 o1 0.8
 o2 0.2
 kd 1.0
 ks 1.0
-ka 0.1
+ka 0.5
 kn 10.0
-color 0.828125 0.68359375 0.21484375
+color 1.0 0.0 0.0
 END
 
+SPHERE
+radio 40.0
+centro 850.0 317.0 500.0
+c1 0.8
+c2 0.0
+c3 0.0
+o1 0.8
+o2 0.2
+kd 1.0
+ks 1.0
+ka 0.5
+kn 10.0
+color 0.0 0.0 1.0
+END
+
+
+##PLANO DEL SUELO
 PLANE
 coef 0.0 1.0 0.0 0.0
 c1 0.5
@@ -173,4 +310,91 @@ ks 1.0
 ka 1.0
 kn 10.0
 color 0.5 0.5 0.5
+END
+
+POLYGON
+v_number 10
+p 850.0 0.1 100.0
+p 830.0 0.1 420.0
+p 990.0 0.1 580.0
+p 670.0 0.1 580.0 
+p 550.0 0.1 740.0 
+p 350.0 0.1 580.0 
+p 110.0 0.1 580.0 
+p 270.0 0.1 420.0 
+p 150.0 0.1 100.0 
+p 550.0 0.1 260.0 
+c1 0.5
+c2 0.0
+c3 0.0
+o1 0.2
+o2 0.8
+kd 1.0
+ks 1.0
+ka 1.0
+kn 10.0
+color 0.0 0.0 1.0
+END
+
+
+##PLANO DE FONDO
+PLANE
+coef 0.0 0.0 -1.0 2000.0
+c1 0.5
+c2 0.0
+c3 0.0
+o1 1.0
+o2 0.0
+kd 1.0
+ks 1.0
+ka 1.0
+kn 10.0
+color 0.7 0.7 0.7
+END
+
+
+##Espejo DE LADO
+##PLANE
+coef 1.0 0.0 0.0 400.0
+c1 0.5
+c2 0.0
+c3 0.0
+o1 1.0
+o2 0.0
+kd 1.0
+ks 1.0
+ka 1.0
+kn 10.0
+color 0.7 0.7 0.7
+##END
+
+
+SPHERE
+radio 500.0
+centro -400.0 0.0 2000.0
+c1 0.8
+c2 0.0
+c3 0.0
+o1 0.5
+o2 0.5
+kd 1.0
+ks 1.0
+ka 0.5
+kn 10.0
+color 0.0 0.0 0.0
+END
+
+SPHERE
+radio 500.0
+centro 1500.0 0.0 2000.0
+c1 0.8
+c2 0.0
+c3 0.0
+o1 0.5
+o2 0.5
+kd 1.0
+ks 1.0
+ka 0.5
+kn 10.0
+color 0.0 0.0 0.0
 END

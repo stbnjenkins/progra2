@@ -8,13 +8,13 @@ RESOLUTION
 xyz 1110 700
 
 INTENSITY
-vv 1.0
+vv 0.0
 
 SHADOW
-vv 1.0
+vv 0.0
 
 ESPECULAR
-vv 1.0
+vv 0.0
 
 CYLINDER
 radio 75.0
