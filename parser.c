@@ -14,7 +14,7 @@ void parseFile(){
     int v, jj;
     VECTOR myvector;
     printf("Opening file...");
-    fp = fopen("test2.txt", "r+");
+    fp = fopen("test5.txt", "r+");
     printf("File opened\n");
     
     list_new(&shapeList, sizeof(SHAPE), NULL);

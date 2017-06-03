@@ -20,7 +20,7 @@ int resy;
 int Enable_intensity;
 int Enable_Shadow;
 int Enable_Especular;
-short int reflection_levels = 1;
+short int reflection_levels = 2;
 
 
 
